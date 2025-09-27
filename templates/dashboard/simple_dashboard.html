@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Scraper Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-text {
+            color: white !important;
+            font-weight: 500;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .scraping-form {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .btn-scrape {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-scrape:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .job-listings {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .listings-title {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #28a745;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .table {
+            margin-bottom: 0;
+            min-width: 1200px;
+            table-layout: fixed;
+        }
+        
+        .table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            padding: 15px 8px;
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .table td {
+            padding: 12px 8px;
+            text-align: center;
+            vertical-align: middle;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .btn-action {
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .btn-edit {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-delete {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-export {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .btn-delete-all {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-save-sheet {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .no-jobs {
+            text-align: center;
+            padding: 50px;
+            color: #6c757d;
+        }
+        
+        .no-jobs i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        /* Custom scrollbar */
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        
+        .table-container::-webkit-scrollbar-corner {
+            background: #f1f1f1;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner-border {
+            color: #667eea;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .clickable-link {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .clickable-link:hover {
+            color: #5a6fd8;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-briefcase me-2"></i>
+                Job Scraper Pro
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">
+                    <i class="fas fa-user me-1"></i>
+                    Welcome, {{ user.first_name|default:user.username|title }}!
+                </span>
+                <a class="nav-link" href="/admin/logout/">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Scraping Form -->
+        <div class="scraping-form">
+            <h3 class="form-title">
+                <i class="fas fa-search me-2"></i>Scrape Job Data
+            </h3>
+            <form method="post" action="{% url 'dashboard:single-scrape' %}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="keyword_type" class="form-label">Job Type</label>
+                            <select class="form-select" id="keyword_type" name="keyword_type" required>
+                                <option value="Technical">Technical</option>
+                                <option value="Non-Technical">Non-Technical</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="keywords" class="form-label">Keywords *</label>
+                            <input type="text" class="form-control" id="keywords" name="keywords" 
+                                   placeholder="e.g., Python Developer, SEO Specialist" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="job_board" class="form-label">Job Board</label>
+                            <select class="form-select" id="job_board" name="job_board">
+                                <option value="All">All Job Boards</option>
+                                <option value="Indeed UK">Indeed UK</option>
+                                <option value="Indeed US">Indeed US</option>
+                                <option value="LinkedIn Jobs">LinkedIn Jobs</option>
+                                <option value="CV-Library">CV-Library</option>
+                                <option value="Adzuna">Adzuna</option>
+                                <option value="Totaljobs">Totaljobs</option>
+                                <option value="Reed">Reed</option>
+                                <option value="Talent">Talent</option>
+                                <option value="Glassdoor">Glassdoor</option>
+                                <option value="ZipRecruiter">ZipRecruiter</option>
+                                <option value="CWjobs">CWjobs</option>
+                                <option value="Jobsora">Jobsora</option>
+                                <option value="WelcometotheJungle">WelcometotheJungle</option>
+                                <option value="IT Job Board">IT Job Board</option>
+                                <option value="Trueup">Trueup</option>
+                                <option value="Redefined">Redefined</option>
+                                <option value="We Work Remotely">We Work Remotely</option>
+                                <option value="AngelList">AngelList (Wellfound)</option>
+                                <option value="Jobspresso">Jobspresso</option>
+                                <option value="Grabjobs">Grabjobs</option>
+                                <option value="Remote OK">Remote OK</option>
+                                <option value="Working Nomads">Working Nomads</option>
+                                <option value="WorkInStartups">WorkInStartups</option>
+                                <option value="Jobtensor">Jobtensor</option>
+                                <option value="Jora">Jora</option>
+                                <option value="SEOJobs.com">SEOJobs.com</option>
+                                <option value="CareerBuilder">CareerBuilder</option>
+                                <option value="Dice">Dice</option>
+                                <option value="Escape The City">Escape The City</option>
+                                <option value="Jooble">Jooble</option>
+                                <option value="Otta">Otta</option>
+                                <option value="Remote.co">Remote.co</option>
+                                <option value="SEL Jobs">SEL Jobs</option>
+                                <option value="FlexJobs">FlexJobs</option>
+                                <option value="Dynamite Jobs">Dynamite Jobs</option>
+                                <option value="SimplyHired">SimplyHired</option>
+                                <option value="Remotive">Remotive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="market" class="form-label">Market</label>
+                            <select class="form-select" id="market" name="market">
+                                <option value="USA">USA</option>
+                                <option value="UK">UK</option>
+                                <option value="Both">Both USA & UK</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="job_type" class="form-label">Job Type</label>
+                            <select class="form-select" id="job_type" name="job_type">
+                                <option value="All">All Types</option>
+                                <option value="Remote">Remote</option>
+                                <option value="Hybrid">Hybrid</option>
+                                <option value="On-site">On-site</option>
+                                <option value="Freelance">Freelance</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="time_range" class="form-label">Time Range</label>
+                            <select class="form-select" id="time_range" name="time_range">
+                                <option value="24">Last 24 Hours</option>
+                                <option value="168">Last 7 Days</option>
+                                <option value="720">Last 30 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <button type="submit" class="btn btn-scrape btn-lg w-100">
+                            <i class="fas fa-play me-2"></i>Start Scraping
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Job Listings -->
+        <div class="job-listings">
+            <div class="listings-title">
+                <span>
+                    <i class="fas fa-list me-2"></i>Job Listings
+                    <span class="badge bg-primary ms-2">{{ processed_jobs|length }}</span>
+                </span>
+                <div>
+                    <button class="btn btn-save-sheet" onclick="saveToGoogleSheet()">
+                        <i class="fas fa-table me-1"></i>Save to Sheet
+                    </button>
+                    <button class="btn btn-export" onclick="exportToExcel()">
+                        <i class="fas fa-download me-1"></i>Export Excel
+                    </button>
+                    <button class="btn btn-delete-all" onclick="deleteAllJobs()">
+                        <i class="fas fa-trash me-1"></i>Delete All
+                    </button>
+                </div>
+            </div>
+
+            {% if processed_jobs %}
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="8%">Field</th>
+                                <th width="8%">Posted Date</th>
+                                <th width="12%">Job Title</th>
+                                <th width="10%">Company</th>
+                                <th width="8%">Company URL</th>
+                                <th width="8%">Company Size</th>
+                                <th width="8%">Job Link</th>
+                                <th width="8%">Job Portal</th>
+                                <th width="8%">Location</th>
+                                <th width="6%">First Name</th>
+                                <th width="6%">Last Name</th>
+                                <th width="8%">Title</th>
+                                <th width="8%">LinkedIn</th>
+                                <th width="8%">Email</th>
+                                <th width="8%">Phone</th>
+                                <th width="8%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in processed_jobs %}
+                                <tr>
+                                    <td>{{ item.job.is_technical|yesno:"Technical,Non-Technical" }}</td>
+                                    <td>{{ item.job.posted_date|date:"m/d/Y" }}</td>
+                                    <td>{{ item.job.job_title }}</td>
+                                    <td>{{ item.job.company.name }}</td>
+                                    <td>
+                                        {% if item.job.company_url %}
+                                            <a href="{{ item.job.company_url }}" target="_blank" class="clickable-link">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.job.company_size }}</td>
+                                    <td>
+                                        {% if item.job.job_link %}
+                                            <a href="{{ item.job.job_link }}" target="_blank" class="clickable-link">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.job.source_job_portal }}</td>
+                                    <td>{{ item.job.location }}</td>
+                                    <td>{{ item.first_name }}</td>
+                                    <td>{{ item.last_name }}</td>
+                                    <td>{{ item.decision_maker.decision_maker_title|default:"-" }}</td>
+                                    <td>
+                                        {% if item.decision_maker.decision_maker_linkedin %}
+                                            <a href="{{ item.decision_maker.decision_maker_linkedin }}" target="_blank" class="clickable-link">
+                                                <i class="fab fa-linkedin"></i>
+                                            </a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.decision_maker.decision_maker_email|default:"-" }}</td>
+                                    <td>{{ item.decision_maker.decision_maker_phone|default:"-" }}</td>
+                                    <td>
+                                        <button class="btn btn-edit btn-action" onclick="editJob({{ item.job.id }})">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-delete btn-action" onclick="deleteJob({{ item.job.id }})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-jobs">
+                    <i class="fas fa-search"></i>
+                    <h4>No job listings found</h4>
+                    <p>Start scraping to see job listings here</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function editJob(jobId) {
+            alert('Edit functionality removed for simplicity. Please delete and re-scrape if needed.');
+        }
+
+        function deleteJob(jobId) {
+            if (confirm('Are you sure you want to delete this job listing?')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/dashboard/delete-job/${jobId}/`;
+                
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = 'csrfmiddlewaretoken';
+                csrfInput.value = csrfToken;
+                form.appendChild(csrfInput);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function deleteAllJobs() {
+            if (confirm('Are you sure you want to delete ALL job listings? This action cannot be undone.')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/dashboard/delete-all/';
+                
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = 'csrfmiddlewaretoken';
+                csrfInput.value = csrfToken;
+                form.appendChild(csrfInput);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function exportToExcel() {
+            window.location.href = '/dashboard/export/';
+        }
+
+        function saveToGoogleSheet() {
+            if (confirm('Save all job listings to Google Sheet?')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/dashboard/save-to-sheet/';
+                
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = 'csrfmiddlewaretoken';
+                csrfInput.value = csrfToken;
+                form.appendChild(csrfInput);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        // Auto-refresh job listings after scraping
+        if (window.location.search.includes('scraped=true')) {
+            setTimeout(() => {
+                window.location.href = window.location.pathname;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Scrape Details - {{ block.super }}{% endblock %}
+
+{% block page_title %}Scrape Details{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Scrape Details</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Scrape Information</h5>
+                <span class="badge bg-{% if scrape_log.status == 'completed' %}success{% elif scrape_log.status == 'failed' %}danger{% elif scrape_log.status == 'in_progress' %}warning{% else %}info{% endif %} fs-6">
+                    {{ scrape_log.get_status_display }}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Basic Information</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Started:</strong> {{ scrape_log.started_at|date:"M j, Y H:i" }}</li>
+                            {% if scrape_log.completed_at %}
+                                <li><strong>Completed:</strong> {{ scrape_log.completed_at|date:"M j, Y H:i" }}</li>
+                                <li><strong>Duration:</strong> {{ scrape_log.started_at|timesince:scrape_log.completed_at }}</li>
+                            {% endif %}
+                            {% if scrape_log.filter_used %}
+                                <li><strong>Filter Used:</strong> {{ scrape_log.filter_used.name }}</li>
+                            {% else %}
+                                <li><strong>Type:</strong> Manual Scrape</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Results</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Jobs Found:</strong> {{ scrape_log.job_listings_found|intcomma }}</li>
+                            <li><strong>Companies Found:</strong> {{ scrape_log.companies_found|intcomma }}</li>
+                            <li><strong>Decision Makers:</strong> {{ scrape_log.decision_makers_found|intcomma }}</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                {% if scrape_log.error_message %}
+                    <div class="alert alert-danger mt-3">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-exclamation-triangle me-2"></i> Error Details
+                        </h6>
+                        <p class="mb-0">{{ scrape_log.error_message }}</p>
+                    </div>
+                {% endif %}
+                
+                {% if scrape_log.status == 'completed' and scrape_log.job_listings_found > 0 %}
+                    <div class="mt-3">
+                        <a href="{% url 'dashboard:job-list' %}?scrape={{ scrape_log.id }}" class="btn btn-primary">
+                            <i class="fas fa-eye me-2"></i> View Found Jobs
+                        </a>
+                        <a href="{% url 'dashboard:scrape-export' scrape_log.id %}" class="btn btn-success">
+                            <i class="fas fa-download me-2"></i> Export to Google Sheets
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Actions</h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'dashboard:home' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+                    </a>
+                    {% if scrape_log.status == 'failed' %}
+                        <a href="{% url 'dashboard:scrape-start' %}" class="btn btn-warning">
+                            <i class="fas fa-redo me-2"></i> Retry Scraping
+                        </a>
+                    {% endif %}
+                    {% if scrape_log.status == 'completed' %}
+                        <a href="{% url 'dashboard:scrape-export' scrape_log.id %}" class="btn btn-success">
+                            <i class="fas fa-download me-2"></i> Export Results
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        {% if scrape_log.status == 'in_progress' %}
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-spinner fa-spin me-2"></i>Progress
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="progress mb-3">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" 
+                         role="progressbar" style="width: 75%" 
+                         aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <span class="progress-text">75%</span>
+                    </div>
+                </div>
+                
+                <div class="scraping-steps">
+                    <div class="step completed">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>Initializing scraper...</span>
+                    </div>
+                    <div class="step completed">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span>Connecting to job portals...</span>
+                    </div>
+                    <div class="step active">
+                        <i class="fas fa-spinner fa-spin text-warning me-2"></i>
+                        <span>Scraping job listings...</span>
+                    </div>
+                    <div class="step pending">
+                        <i class="fas fa-circle text-muted me-2"></i>
+                        <span>Extracting decision makers...</span>
+                    </div>
+                    <div class="step pending">
+                        <i class="fas fa-circle text-muted me-2"></i>
+                        <span>Finalizing results...</span>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-1"></i>
+                            <span id="elapsed-time">00:00</span> elapsed
+                        </small>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()">
+                            <i class="fas fa-sync-alt me-1"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if scrape_log.filter_used %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Filter Details</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Search Criteria</h6>
+                        <ul class="list-unstyled">
+                            {% if scrape_log.filter_used.keywords %}
+                                <li><strong>Keywords:</strong> {{ scrape_log.filter_used.keywords }}</li>
+                            {% endif %}
+                            {% if scrape_log.filter_used.market %}
+                                <li><strong>Market:</strong> {{ scrape_log.filter_used.get_market_display }}</li>
+                            {% endif %}
+                            {% if scrape_log.filter_used.job_type %}
+                                <li><strong>Job Type:</strong> {{ scrape_log.filter_used.get_job_type_display }}</li>
+                            {% endif %}
+                            {% if scrape_log.filter_used.is_technical is not None %}
+                                <li><strong>Category:</strong> {{ scrape_log.filter_used.is_technical|yesno:"Technical,Non-Technical" }}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Additional Settings</h6>
+                        <ul class="list-unstyled">
+                            {% if scrape_log.filter_used.date_range %}
+                                <li><strong>Date Range:</strong> {{ scrape_log.filter_used.get_date_range_display }}</li>
+                            {% endif %}
+                            <li><strong>Created:</strong> {{ scrape_log.filter_used.created_at|date:"M j, Y" }}</li>
+                            <li><strong>Active:</strong> {{ scrape_log.filter_used.is_active|yesno:"Yes,No" }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.scraping-steps {
+    margin: 1rem 0;
+}
+
+.scraping-steps .step {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.scraping-steps .step:last-child {
+    border-bottom: none;
+}
+
+.scraping-steps .step.completed {
+    color: #28a745;
+}
+
+.scraping-steps .step.active {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.scraping-steps .step.pending {
+    color: #6c757d;
+}
+
+.progress-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #000;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-refresh if scraping is in progress
+    {% if scrape_log.status == 'in_progress' %}
+        // Start elapsed time counter
+        const startTime = new Date('{{ scrape_log.started_at|date:"c" }}');
+        const elapsedTimeElement = document.getElementById('elapsed-time');
+        
+        function updateElapsedTime() {
+            const now = new Date();
+            const elapsed = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            elapsedTimeElement.textContent = 
+                String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        }
+        
+        // Update elapsed time every second
+        updateElapsedTime();
+        const timeInterval = setInterval(updateElapsedTime, 1000);
+        
+        // Auto-refresh every 10 seconds
+        const refreshInterval = setInterval(function() {
+            location.reload();
+        }, 10000);
+        
+        // Clean up intervals when page unloads
+        window.addEventListener('beforeunload', function() {
+            clearInterval(timeInterval);
+            clearInterval(refreshInterval);
+        });
+    {% endif %}
+});
+</script>
+{% endblock %}

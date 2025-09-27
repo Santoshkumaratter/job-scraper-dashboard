@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Start Scraping - {{ block.super }}{% endblock %}
+
+{% block page_title %}Start Job Scraping{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Start Scraping</li>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+        <!-- Main Scraping Card -->
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-gradient-primary text-white py-4">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <i class="fas fa-rocket fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1">Start Job Scraping</h4>
+                        <p class="mb-0 opacity-75">Automatically collect job listings from 38+ job portals</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-5">
+                {% if search_filter %}
+                    <div class="alert alert-success border-0 shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle fa-2x text-success me-3"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1">✅ Filter Selected</h6>
+                                <p class="mb-0"><strong>{{ search_filter.name }}</strong> will be used for this scraping session.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 bg-light mb-4">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">
+                                <i class="fas fa-filter me-2"></i>Filter Details
+                            </h6>
+                            <div class="row">
+                                {% if search_filter.keywords %}
+                                <div class="col-md-6 mb-2">
+                                    <small class="text-muted">Keywords:</small><br>
+                                    <span class="badge bg-primary">{{ search_filter.keywords }}</span>
+                                </div>
+                                {% endif %}
+                                {% if search_filter.market %}
+                                <div class="col-md-6 mb-2">
+                                    <small class="text-muted">Market:</small><br>
+                                    <span class="badge bg-info">{{ search_filter.get_market_display }}</span>
+                                </div>
+                                {% endif %}
+                                {% if search_filter.job_type %}
+                                <div class="col-md-6 mb-2">
+                                    <small class="text-muted">Job Type:</small><br>
+                                    <span class="badge bg-secondary">{{ search_filter.get_job_type_display }}</span>
+                                </div>
+                                {% endif %}
+                                {% if search_filter.is_technical is not None %}
+                                <div class="col-md-6 mb-2">
+                                    <small class="text-muted">Category:</small><br>
+                                    <span class="badge bg-{{ search_filter.is_technical|yesno:'success,warning' }}">{{ search_filter.is_technical|yesno:"Technical,Non-Technical" }}</span>
+                                </div>
+                                {% endif %}
+                                {% if search_filter.date_range %}
+                                <div class="col-md-6 mb-2">
+                                    <small class="text-muted">Date Range:</small><br>
+                                    <span class="badge bg-dark">{{ search_filter.get_date_range_display }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning border-0 shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-exclamation-triangle fa-2x text-warning me-3"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1">⚠️ Manual Scraping</h6>
+                                <p class="mb-0">No specific filter selected. This will scrape jobs using default settings across all portals.</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- What Will Happen Section -->
+                <div class="card border-0 bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h6 class="card-title mb-3">
+                            <i class="fas fa-magic me-2"></i>What Will Happen?
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-search me-2"></i>
+                                    <span>Search 38+ job portals</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-building me-2"></i>
+                                    <span>Extract company details</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-users me-2"></i>
+                                    <span>Find decision makers</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-database me-2"></i>
+                                    <span>Save to database</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-file-excel me-2"></i>
+                                    <span>Export to Google Sheets</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-bell me-2"></i>
+                                    <span>Send notification</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Time Estimate -->
+                <div class="alert alert-info border-0 shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-clock fa-2x text-info me-3"></i>
+                        <div>
+                            <h6 class="alert-heading mb-1">⏱️ Estimated Time</h6>
+                            <p class="mb-0"><strong>2-5 minutes</strong> - Our fast scraper will complete the job quickly!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="d-grid gap-3 mt-4">
+                    <form method="post" id="scrapingForm">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-lg py-3">
+                            <i class="fas fa-rocket me-2"></i> Start Scraping Now
+                        </button>
+                    </form>
+                    <a href="{% url 'dashboard:home' %}" class="btn btn-outline-secondary btn-lg py-2">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Scrapes -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-history me-2"></i> Recent Scrapes
+                </h6>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_scrapes %}
+                    <div class="list-group list-group-flush">
+                        {% for scrape in recent_scrapes|slice:":5" %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">
+                                        {% if scrape.filter_used %}
+                                            {{ scrape.filter_used.name }}
+                                        {% else %}
+                                            Manual Scrape
+                                        {% endif %}
+                                    </h6>
+                                    <small class="text-muted">
+                                        {{ scrape.started_at|timesince }} ago
+                                    </small>
+                                </div>
+                                <div>
+                                    <span class="badge bg-{% if scrape.status == 'completed' %}success{% elif scrape.status == 'failed' %}danger{% else %}info{% endif %}">
+                                        {{ scrape.get_status_display }}
+                                    </span>
+                                    {% if scrape.status == 'completed' %}
+                                        <a href="{% url 'dashboard:scrape-detail' scrape.id %}" class="btn btn-sm btn-outline-primary ms-2">
+                                            View Results
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4 text-muted">
+                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                        <p class="mb-0">No recent scrapes found.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add confirmation dialog for starting scraping
+    const form = document.querySelector('#scrapingForm');
+    const submitButton = form.querySelector('button[type="submit"]');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show professional confirmation
+        if (confirm('🚀 Ready to start scraping?\n\nThis will search 38+ job portals and collect job listings.\n\nEstimated time: 2-5 minutes\n\nClick OK to continue or Cancel to go back.')) {
+            // Show loading state
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Starting Scraping...';
+            submitButton.disabled = true;
+            
+            // Submit the form
+            form.submit();
+        }
+    });
+});
+</script>
+{% endblock %}
