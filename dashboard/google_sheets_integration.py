@@ -27,6 +27,7 @@ class GoogleSheetsManager:
         try:
             if not os.path.exists(self.credentials_path):
                 print(f"❌ Google Sheets credentials not found at: {self.credentials_path}")
+                print("💡 Creating fallback solution - data will be exported as CSV instead")
                 return None
                 
             scope = [
@@ -39,14 +40,16 @@ class GoogleSheetsManager:
             return client
         except Exception as e:
             print(f"❌ Error authenticating with Google Sheets: {e}")
+            print("💡 Using fallback solution - data will be exported as CSV instead")
             return None
     
     def append_data_to_sheet(self, data, sheet_name="Sheet1"):
-        """Appends data to the specified Google Sheet"""
+        """Appends data to the specified Google Sheet or creates CSV fallback"""
         try:
             client = self.get_google_sheet_client()
             if not client:
-                return False, "Failed to authenticate with Google Sheets"
+                # Fallback: Save to CSV file instead
+                return self.save_to_csv_fallback(data, sheet_name)
             
             # Open the spreadsheet
             spreadsheet = client.open_by_key(self.sheet_id)
@@ -60,12 +63,41 @@ class GoogleSheetsManager:
             # Append the data
             if data:
                 worksheet.append_rows(data)
-                return True, f"Successfully appended {len(data)} rows to {sheet_name}"
+                return True, f"Successfully appended {len(data)} rows to Google Sheet: {sheet_name}"
             else:
                 return False, "No data to append"
                 
         except Exception as e:
-            return False, f"Error appending to Google Sheets: {e}"
+            # Fallback: Save to CSV file instead
+            return self.save_to_csv_fallback(data, sheet_name)
+    
+    def save_to_csv_fallback(self, data, sheet_name="Sheet1"):
+        """Fallback method to save data as CSV when Google Sheets is not available"""
+        try:
+            import csv
+            from django.conf import settings
+            import os
+            
+            # Create exports directory if it doesn't exist
+            exports_dir = os.path.join(settings.BASE_DIR, 'exports')
+            os.makedirs(exports_dir, exist_ok=True)
+            
+            # Create filename with timestamp
+            from datetime import datetime
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"{sheet_name.replace(' ', '_')}_{timestamp}.csv"
+            filepath = os.path.join(exports_dir, filename)
+            
+            # Write CSV file
+            with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
+                writer = csv.writer(csvfile)
+                for row in data:
+                    writer.writerow(row)
+            
+            return True, f"✅ Data saved to CSV file: {filename} (Google Sheets not configured)"
+            
+        except Exception as e:
+            return False, f"Error saving to CSV fallback: {e}"
     
     def save_technical_jobs_to_sheet(self):
         """Save technical jobs to Google Sheet"""

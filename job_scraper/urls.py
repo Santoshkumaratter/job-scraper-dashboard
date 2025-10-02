@@ -30,14 +30,14 @@ urlpatterns = [
          name='login'),
     path('accounts/logout/', 
          auth_views.LogoutView.as_view(
-             next_page='home',
+             next_page='login',
              template_name='registration/logged_out.html'
          ), 
          name='logout'),
     path('accounts/password_change/', 
          auth_views.PasswordChangeView.as_view(
              template_name='registration/password_change_form.html',
-             success_url=reverse_lazy('dashboard:home')
+             success_url=reverse_lazy('dashboard:single-page')
          ), 
          name='password_change'),
     path('accounts/password_change/done/', 

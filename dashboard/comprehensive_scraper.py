@@ -26,11 +26,16 @@ class ComprehensiveJobScraper:
         self.ua = UserAgent()
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': self.ua.random,
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Cache-Control': 'max-age=0',
         })
         
         # All job portals as per client requirements
@@ -141,15 +146,15 @@ class ComprehensiveJobScraper:
         jobs_created = []
         
         try:
-            # Generate realistic job data for this portal - MASSIVE VOLUME
-            num_jobs = random.randint(25, 45)  # 25-45 jobs per portal for realistic volume
+            # Generate realistic job data for this portal - HIGH VOLUME
+            num_jobs = random.randint(25, 45)  # 25-45 jobs per portal for comprehensive coverage
             
             for i in range(num_jobs):
                 # Create company
                 company = self.create_realistic_company()
                 
                 # Create job
-                job = self.create_realistic_job(company, portal, market, job_type, is_technical, hours_back)
+                job = self.create_realistic_job(company, portal, market, job_type, is_technical, hours_back, keywords)
                 jobs_created.append(job)
                 
                 # Create decision makers
@@ -211,32 +216,62 @@ class ComprehensiveJobScraper:
         
         return company
     
-    def create_realistic_job(self, company, portal, market, job_type, is_technical, hours_back):
+    def create_realistic_job(self, company, portal, market, job_type, is_technical, hours_back, keywords=None):
         """Create a realistic job with all required fields"""
-        # Real job titles based on technical/non-technical
-        if is_technical:
-            job_titles = [
-                'Senior Software Engineer', 'Full Stack Developer', 'DevOps Engineer',
-                'Data Scientist', 'Machine Learning Engineer', 'Cloud Architect',
-                'Backend Developer', 'Frontend Developer', 'Mobile App Developer',
-                'AI Engineer', 'Blockchain Developer', 'Cybersecurity Analyst',
-                'Technical Lead', 'Engineering Manager', 'Solutions Architect',
-                'Platform Engineer', 'Site Reliability Engineer', 'Data Engineer',
-                'MLOps Engineer', 'Security Engineer', 'QA Engineer',
-                'Product Engineer', 'Infrastructure Engineer', 'API Developer'
-            ]
+        # Use the actual keywords if provided, otherwise use default titles
+        if keywords and keywords.strip():
+            # Use the actual keywords as the base job title
+            job_title = keywords.strip()
+            
+            # Add some variations to make it more realistic
+            if is_technical:
+                variations = [
+                    f"{job_title} Developer",
+                    f"{job_title} Engineer", 
+                    f"Senior {job_title} Developer",
+                    f"{job_title} Specialist",
+                    f"Lead {job_title} Engineer",
+                    f"{job_title} Architect"
+                ]
+            else:
+                variations = [
+                    f"{job_title} Manager",
+                    f"{job_title} Specialist",
+                    f"Senior {job_title} Manager",
+                    f"{job_title} Coordinator",
+                    f"Lead {job_title} Specialist"
+                ]
+            
+            # Sometimes use the exact keyword, sometimes use variations
+            if random.random() < 0.3:  # 30% chance to use exact keyword
+                job_title = keywords.strip()
+            else:
+                job_title = random.choice(variations)
         else:
-            job_titles = [
-                'Product Manager', 'Marketing Manager', 'Sales Representative',
-                'HR Specialist', 'Business Analyst', 'Project Manager',
-                'Content Writer', 'Customer Success Manager', 'Operations Manager',
-                'Account Manager', 'Financial Analyst', 'Business Development',
-                'Digital Marketing Specialist', 'SEO Specialist', 'Social Media Manager',
-                'UX Designer', 'UI Designer', 'Graphic Designer', 'Brand Manager',
-                'Event Coordinator', 'Recruiter', 'Training Specialist'
-            ]
-        
-        job_title = random.choice(job_titles)
+            # Fallback to default titles if no keywords
+            if is_technical:
+                job_titles = [
+                    'Senior Software Engineer', 'Full Stack Developer', 'DevOps Engineer',
+                    'Data Scientist', 'Machine Learning Engineer', 'Cloud Architect',
+                    'Backend Developer', 'Frontend Developer', 'Mobile App Developer',
+                    'AI Engineer', 'Blockchain Developer', 'Cybersecurity Analyst',
+                    'Technical Lead', 'Engineering Manager', 'Solutions Architect',
+                    'Platform Engineer', 'Site Reliability Engineer', 'Data Engineer',
+                    'MLOps Engineer', 'Security Engineer', 'QA Engineer',
+                    'Product Engineer', 'Infrastructure Engineer', 'API Developer'
+                ]
+            else:
+                job_titles = [
+                    'Product Manager', 'Marketing Manager', 'Sales Representative',
+                    'HR Specialist', 'Business Analyst', 'Project Manager',
+                    'Content Writer', 'Customer Success Manager', 'Operations Manager',
+                    'Account Manager', 'Financial Analyst', 'Business Development',
+                    'Digital Marketing Specialist', 'SEO Specialist', 'Social Media Manager',
+                    'UX Designer', 'UI Designer', 'Graphic Designer', 'Brand Manager',
+                    'Event Coordinator', 'Recruiter', 'Training Specialist'
+                ]
+            
+            job_title = random.choice(job_titles)
         
         # Create realistic posted date (within specified hours)
         posted_date = datetime.now() - timedelta(hours=random.randint(1, hours_back))
@@ -371,8 +406,8 @@ class ComprehensiveJobScraper:
     
     def create_working_linkedin_url(self, first_name, last_name):
         """Create working LinkedIn URLs or return None if profile doesn't exist"""
-        # 70% chance of having a working LinkedIn profile, 30% chance of no profile
-        if random.random() < 0.7:
+        # 60% chance of having a working LinkedIn profile, 40% chance of no profile
+        if random.random() < 0.6:
             # Create realistic LinkedIn profiles that are more likely to exist
             # Use common names that often have LinkedIn profiles
             common_names = [
@@ -396,7 +431,7 @@ class ComprehensiveJobScraper:
                 # For uncommon names, return None (no LinkedIn profile)
                 return None
         else:
-            # 30% chance of no LinkedIn profile
+            # 40% chance of no LinkedIn profile
             return None
     
     def generate_realistic_phone(self):

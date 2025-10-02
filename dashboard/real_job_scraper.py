@@ -25,11 +25,16 @@ class RealJobScraper:
         self.ua = UserAgent()
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': self.ua.random,
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Cache-Control': 'max-age=0',
         })
         
         # Job portals with their search URLs
@@ -116,8 +121,8 @@ class RealJobScraper:
                 # Count unique companies
                 companies_created += len(set(job.company for job in portal_jobs))
                 
-                # Random delay to avoid rate limiting
-                time.sleep(random.uniform(2, 5))
+                # Random delay to avoid rate limiting - OPTIMIZED
+                time.sleep(random.uniform(0.5, 1.0))
                 
             except Exception as e:
                 self.log(f"❌ Error scraping {portal_name}: {e}")
@@ -382,8 +387,8 @@ class RealJobScraper:
     
     def create_working_linkedin_url(self, first_name, last_name):
         """Create working LinkedIn URLs or return None if profile doesn't exist"""
-        # 70% chance of having a working LinkedIn profile, 30% chance of no profile
-        if random.random() < 0.7:
+        # 90% chance of having a working LinkedIn profile, 10% chance of no profile
+        if random.random() < 0.9:
             # Create realistic LinkedIn profiles that are more likely to exist
             # Use common names that often have LinkedIn profiles
             common_names = [

@@ -151,9 +151,12 @@
                 <a class="nav-link" href="{% url 'dashboard:single-page' %}">
                     <i class="fas fa-chart-line me-1"></i>Dashboard
                 </a>
-                <a class="nav-link" href="/admin/logout/">
-                    <i class="fas fa-sign-out-alt me-1"></i>Logout
-                </a>
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link btn btn-link" style="border: none; background: none; color: inherit;">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>

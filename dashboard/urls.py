@@ -12,4 +12,5 @@ urlpatterns = [
     path('save-to-sheet/', login_required(single_views.single_save_to_sheet), name='save-to-sheet'),
     path('delete-all/', login_required(single_views.single_delete_all), name='delete-all'),
     path('delete-job/<int:job_id>/', login_required(single_views.single_delete_job), name='delete-job'),
+    path('edit-job/<int:job_id>/', login_required(single_views.single_edit_job), name='edit-job'),
 ]

@@ -136,7 +136,7 @@ AUTHENTICATION_BACKENDS = [
 
 # Login/Logout URLs
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard:home'
+LOGIN_REDIRECT_URL = 'dashboard:single-page'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Session settings
@@ -163,7 +163,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Login/Logout URLs
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard:home'
+LOGIN_REDIRECT_URL = 'dashboard:single-page'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Default primary key field type

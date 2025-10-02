@@ -14,11 +14,18 @@ from .google_sheets_integration import GoogleSheetsManager
 @login_required
 def single_page(request):
     """Single page with scraping form and job listings"""
+    from django.core.paginator import Paginator
+    
     job_listings = JobListing.objects.all().order_by('-last_updated')
+    
+    # Add pagination
+    paginator = Paginator(job_listings, 50)  # Show 50 jobs per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     # Process job listings to split decision maker names
     processed_jobs = []
-    for job in job_listings:
+    for job in page_obj:
         job_dict = {
             'job': job,
             'first_name': '',
@@ -37,7 +44,8 @@ def single_page(request):
         processed_jobs.append(job_dict)
     
     return render(request, 'dashboard/simple_dashboard.html', {
-        'processed_jobs': processed_jobs
+        'processed_jobs': processed_jobs,
+        'page_obj': page_obj
     })
 
 
@@ -151,19 +159,29 @@ def single_export(request):
 @login_required
 @require_POST
 def single_save_to_sheet(request):
-    """Save jobs to Google Sheet"""
+    """Save jobs to Google Sheet or CSV fallback"""
     try:
         sheets_manager = GoogleSheetsManager()
         success, message = sheets_manager.save_all_jobs_to_sheet()
+        
+        # Check if it's a fallback CSV save
+        if "CSV file" in message:
+            messages.info(request, f"📁 {message}")
+        elif success:
+            messages.success(request, f"✅ {message}")
+        else:
+            messages.error(request, f"❌ {message}")
         
         return JsonResponse({
             'success': success,
             'message': message
         })
     except Exception as e:
+        error_msg = f'Error saving to Google Sheet: {str(e)}'
+        messages.error(request, f"❌ {error_msg}")
         return JsonResponse({
             'success': False,
-            'message': f'Error saving to Google Sheet: {str(e)}'
+            'message': error_msg
         })
 
 
@@ -199,4 +217,49 @@ def single_delete_job(request, job_id):
         return redirect('dashboard:single-page')
     except Exception as e:
         messages.error(request, f'Error deleting job: {str(e)}')
+        return redirect('dashboard:single-page')
+
+
+@login_required
+def single_edit_job(request, job_id):
+    """Edit a single job listing"""
+    try:
+        job = JobListing.objects.get(id=job_id)
+        decision_maker = job.company.decision_makers.first() if job.company.decision_makers.exists() else None
+        
+        if request.method == 'POST':
+            # Update job data
+            job.job_title = request.POST.get('job_title', job.job_title)
+            job.location = request.POST.get('location', job.location)
+            job.company_size = request.POST.get('company_size', job.company_size)
+            job.is_technical = request.POST.get('is_technical') == 'on'
+            
+            # Update company data
+            job.company.name = request.POST.get('company_name', job.company.name)
+            job.company.company_url = request.POST.get('company_url', job.company.company_url)
+            job.company.save()
+            
+            # Update decision maker data
+            if decision_maker:
+                decision_maker.decision_maker_name = request.POST.get('decision_maker_name', decision_maker.decision_maker_name)
+                decision_maker.decision_maker_title = request.POST.get('decision_maker_title', decision_maker.decision_maker_title)
+                decision_maker.decision_maker_email = request.POST.get('decision_maker_email', decision_maker.decision_maker_email)
+                decision_maker.decision_maker_phone = request.POST.get('decision_maker_phone', decision_maker.decision_maker_phone)
+                decision_maker.decision_maker_linkedin = request.POST.get('decision_maker_linkedin', decision_maker.decision_maker_linkedin)
+                decision_maker.save()
+            
+            job.save()
+            messages.success(request, 'Job listing updated successfully!')
+            return redirect('dashboard:single-page')
+        
+        return render(request, 'dashboard/edit_job.html', {
+            'job': job,
+            'decision_maker': decision_maker
+        })
+        
+    except JobListing.DoesNotExist:
+        messages.error(request, 'Job listing not found!')
+        return redirect('dashboard:single-page')
+    except Exception as e:
+        messages.error(request, f'Error editing job: {str(e)}')
         return redirect('dashboard:single-page')

@@ -482,7 +482,7 @@ def export_to_google_sheets(request, scrape_id):
 class RegisterView(FormView):
     template_name = 'registration/signup.html'
     form_class = UserRegistrationForm
-    success_url = reverse_lazy('dashboard:home')
+    success_url = reverse_lazy('dashboard:single-page')
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -525,7 +525,7 @@ class CustomLoginView(AuthLoginView):
     
     def get_success_url(self):
         next_url = self.request.GET.get('next')
-        return next_url if next_url else reverse('dashboard:home')
+        return next_url if next_url else reverse('dashboard:single-page')
     
     def form_invalid(self, form):
         messages.error(self.request, 'Invalid email or password. Please try again.')
