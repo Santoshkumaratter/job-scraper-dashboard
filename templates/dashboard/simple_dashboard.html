@@ -268,99 +268,60 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="keyword_type" class="form-label">Job Type</label>
-                            <select class="form-select" id="keyword_type" name="keyword_type" required>
-                                <option value="Technical">Technical</option>
-                                <option value="Non-Technical">Non-Technical</option>
-                            </select>
+                            <label for="{{ form.keyword_type.id_for_label }}" class="form-label">{{ form.keyword_type.label }}</label>
+                            {{ form.keyword_type }}
+                            {% if form.keyword_type.help_text %}
+                                <div class="form-text">{{ form.keyword_type.help_text }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="keywords" class="form-label">Keywords *</label>
-                            <input type="text" class="form-control" id="keywords" name="keywords" 
-                                   placeholder="e.g., Python Developer, SEO Specialist" required>
+                            <label for="{{ form.keywords.id_for_label }}" class="form-label">{{ form.keywords.label }}</label>
+                            {{ form.keywords }}
+                            {% if form.keywords.help_text %}
+                                <div class="form-text">{{ form.keywords.help_text }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="job_board" class="form-label">Job Board</label>
-                            <select class="form-select" id="job_board" name="job_board">
-                                <option value="All">All Job Boards</option>
-                                <option value="Indeed UK">Indeed UK</option>
-                                <option value="Indeed US">Indeed US</option>
-                                <option value="LinkedIn Jobs">LinkedIn Jobs</option>
-                                <option value="CV-Library">CV-Library</option>
-                                <option value="Adzuna">Adzuna</option>
-                                <option value="Totaljobs">Totaljobs</option>
-                                <option value="Reed">Reed</option>
-                                <option value="Talent">Talent</option>
-                                <option value="Glassdoor">Glassdoor</option>
-                                <option value="ZipRecruiter">ZipRecruiter</option>
-                                <option value="CWjobs">CWjobs</option>
-                                <option value="Jobsora">Jobsora</option>
-                                <option value="WelcometotheJungle">WelcometotheJungle</option>
-                                <option value="IT Job Board">IT Job Board</option>
-                                <option value="Trueup">Trueup</option>
-                                <option value="Redefined">Redefined</option>
-                                <option value="We Work Remotely">We Work Remotely</option>
-                                <option value="AngelList">AngelList (Wellfound)</option>
-                                <option value="Jobspresso">Jobspresso</option>
-                                <option value="Grabjobs">Grabjobs</option>
-                                <option value="Remote OK">Remote OK</option>
-                                <option value="Working Nomads">Working Nomads</option>
-                                <option value="WorkInStartups">WorkInStartups</option>
-                                <option value="Jobtensor">Jobtensor</option>
-                                <option value="Jora">Jora</option>
-                                <option value="SEOJobs.com">SEOJobs.com</option>
-                                <option value="CareerBuilder">CareerBuilder</option>
-                                <option value="Dice">Dice</option>
-                                <option value="Escape The City">Escape The City</option>
-                                <option value="Jooble">Jooble</option>
-                                <option value="Otta">Otta</option>
-                                <option value="Remote.co">Remote.co</option>
-                                <option value="SEL Jobs">SEL Jobs</option>
-                                <option value="FlexJobs">FlexJobs</option>
-                                <option value="Dynamite Jobs">Dynamite Jobs</option>
-                                <option value="SimplyHired">SimplyHired</option>
-                                <option value="Remotive">Remotive</option>
-                            </select>
+                            <label for="{{ form.job_board.id_for_label }}" class="form-label">{{ form.job_board.label }}</label>
+                            {{ form.job_board }}
+                            {% if form.job_board.help_text %}
+                                <div class="form-text">{{ form.job_board.help_text }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="market" class="form-label">Market</label>
-                            <select class="form-select" id="market" name="market">
-                                <option value="USA">USA</option>
-                                <option value="UK">UK</option>
-                                <option value="Both">Both USA & UK</option>
-                            </select>
+                            <label for="{{ form.market.id_for_label }}" class="form-label">{{ form.market.label }}</label>
+                            {{ form.market }}
+                            {% if form.market.help_text %}
+                                <div class="form-text">{{ form.market.help_text }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="mb-3">
-                            <label for="job_type" class="form-label">Job Type</label>
-                            <select class="form-select" id="job_type" name="job_type">
-                                <option value="All">All Types</option>
-                                <option value="Remote">Remote</option>
-                                <option value="Hybrid">Hybrid</option>
-                                <option value="On-site">On-site</option>
-                                <option value="Freelance">Freelance</option>
-                            </select>
+                            <label for="{{ form.job_type.id_for_label }}" class="form-label">{{ form.job_type.label }}</label>
+                            {{ form.job_type }}
+                            {% if form.job_type.help_text %}
+                                <div class="form-text">{{ form.job_type.help_text }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
-                            <label for="time_range" class="form-label">Time Range</label>
-                            <select class="form-select" id="time_range" name="time_range">
-                                <option value="24">Last 24 Hours</option>
-                                <option value="168">Last 7 Days</option>
-                                <option value="720">Last 30 Days</option>
-                            </select>
+                            <label for="{{ form.time_range.id_for_label }}" class="form-label">{{ form.time_range.label }}</label>
+                            {{ form.time_range }}
+                            {% if form.time_range.help_text %}
+                                <div class="form-text">{{ form.time_range.help_text }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-6 d-flex align-items-end">

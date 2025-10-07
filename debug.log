@@ -6044,3 +6044,557 @@ Not Found: /favicon.ico
 "GET /dashboard/export/ HTTP/1.1" 200 337653
 "GET /dashboard/?page=2 HTTP/1.1" 200 193207
 "GET /dashboard/?page=23 HTTP/1.1" 200 146692
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /accounts/login/?next=/ HTTP/1.1" 200 14235
+"GET /static/css/style.css HTTP/1.1" 304 0
+"GET /static/js/script.js HTTP/1.1" 304 0
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 192664
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 193007
+"GET /dashboard/?page=25 HTTP/1.1" 200 175319
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 14245
+- Broken pipe from ('127.0.0.1', 51290)
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7068
+"GET /dashboard/ HTTP/1.1" 200 194206
+"POST /dashboard/save-to-sheet/ HTTP/1.1" 200 122
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 194559
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 194445
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7068
+"GET /dashboard/ HTTP/1.1" 200 194123
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 195871
+"GET /dashboard/?page=2 HTTP/1.1" 200 195104
+"GET /dashboard/?page=25 HTTP/1.1" 200 167698
+"GET /dashboard/?page=24 HTTP/1.1" 200 194092
+"GET /dashboard/?page=23 HTTP/1.1" 200 195749
+"GET /dashboard/?page=22 HTTP/1.1" 200 195239
+"GET /dashboard/?page=21 HTTP/1.1" 200 197267
+"GET /dashboard/?page=20 HTTP/1.1" 200 195638
+"GET /dashboard/?page=19 HTTP/1.1" 200 195759
+"GET /dashboard/?page=18 HTTP/1.1" 200 196108
+"GET /dashboard/?page=17 HTTP/1.1" 200 195222
+"GET /dashboard/?page=16 HTTP/1.1" 200 196774
+"GET /dashboard/?page=15 HTTP/1.1" 200 196989
+"GET /dashboard/?page=14 HTTP/1.1" 200 195699
+"GET /dashboard/?page=13 HTTP/1.1" 200 195088
+"GET /dashboard/?page=12 HTTP/1.1" 200 197189
+"GET /dashboard/?page=11 HTTP/1.1" 200 196473
+"GET /dashboard/?page=10 HTTP/1.1" 200 195326
+"GET /dashboard/?page=9 HTTP/1.1" 200 195877
+"GET /dashboard/?page=8 HTTP/1.1" 200 197291
+"GET /dashboard/?page=7 HTTP/1.1" 200 196489
+"GET /dashboard/?page=6 HTTP/1.1" 200 195334
+"GET /dashboard/?page=5 HTTP/1.1" 200 196596
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 194179
+"GET /dashboard/?page=23 HTTP/1.1" 200 69017
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/?page=23 HTTP/1.1" 200 76814
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 194687
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/?page=14 HTTP/1.1" 200 130850
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\single_views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\single_views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 101654
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7059
+"GET /dashboard/ HTTP/1.1" 200 65644
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 89827
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 63290
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 194872
+"GET /dashboard/?page=14 HTTP/1.1" 200 138013
+"GET /dashboard/?page=13 HTTP/1.1" 200 194074
+"GET /dashboard/?page=12 HTTP/1.1" 200 194720
+"GET /dashboard/?page=11 HTTP/1.1" 200 194946
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 192167
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/?page=14 HTTP/1.1" 200 121217
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7062
+"GET /dashboard/ HTTP/1.1" 200 121542
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 91147
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 96308
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7060
+"GET /dashboard/ HTTP/1.1" 200 71622
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 71172
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 90400
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 117323
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7066
+"GET /dashboard/ HTTP/1.1" 200 188989
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 56879
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 89469
+"POST /dashboard/save-to-sheet/ HTTP/1.1" 200 122
+"GET /dashboard/ HTTP/1.1" 200 89498
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\single_views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\single_views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\single_views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\single_views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\single_views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 189580
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 189580
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/?page=14 HTTP/1.1" 200 103093
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/?page=12 HTTP/1.1" 200 191393
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7059
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 190002
+"GET /dashboard/?page=2 HTTP/1.1" 200 190399
+"GET /dashboard/?page=3 HTTP/1.1" 200 190683
+"GET /dashboard/?page=5 HTTP/1.1" 200 191823
+"GET /dashboard/?page=13 HTTP/1.1" 200 74443
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57829
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57881
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57881
+"GET /dashboard/ HTTP/1.1" 200 57535
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57881
+"GET /dashboard/ HTTP/1.1" 200 57535
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 121198
+- Broken pipe from ('127.0.0.1', 56276)
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\company_url_fix.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7066
+"GET /dashboard/ HTTP/1.1" 200 189461
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 189621
+"GET /dashboard/?page=12 HTTP/1.1" 200 187952
+"GET /dashboard/?page=10 HTTP/1.1" 200 190473
+"GET /dashboard/?page=9 HTTP/1.1" 200 191104
+"GET /dashboard/?page=10 HTTP/1.1" 200 190473
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57829
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57881
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 90517
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /accounts/login/?next=/ HTTP/1.1" 200 14235
+"GET /static/js/script.js HTTP/1.1" 200 14950
+"GET /static/css/style.css HTTP/1.1" 200 5788
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+- Broken pipe from ('127.0.0.1', 55088)
+"POST /accounts/login/ HTTP/1.1" 200 15409
+"POST /accounts/login/ HTTP/1.1" 200 15409
+"POST /accounts/login/ HTTP/1.1" 200 15409
+"POST /accounts/login/ HTTP/1.1" 200 15409
+"GET /accounts/login/ HTTP/1.1" 200 13949
+"GET /accounts/register/ HTTP/1.1" 200 11820
+"POST /accounts/register/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 195185
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57829
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 189844
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 302 0
+"GET /accounts/login/?next=/ HTTP/1.1" 200 14235
+"GET /static/css/style.css HTTP/1.1" 200 5788
+"GET /static/js/script.js HTTP/1.1" 200 14950
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+"GET /accounts/register/ HTTP/1.1" 200 11820
+"GET /accounts/login/?next=/ HTTP/1.1" 200 14235
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57827
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 92657
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 199906
+"POST /dashboard/save-to-sheet/ HTTP/1.1" 200 122
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/ HTTP/1.1" 200 199906
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57829
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 93086
+"GET /dashboard/ HTTP/1.1" 200 93119
+"GET /dashboard/ HTTP/1.1" 200 92766
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 3779
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57829
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 108234
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7054
+"GET /dashboard/ HTTP/1.1" 200 201634
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57829
+"POST /dashboard/scrape/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 93166
+"GET /dashboard/edit-job/100063/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 93249
+"GET /dashboard/edit-job/100064/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 93249
+"GET /dashboard/ HTTP/1.1" 200 92846
+"POST /dashboard/delete-all/ HTTP/1.1" 302 0
+"GET /dashboard/ HTTP/1.1" 200 57829
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7054
+"GET /dashboard/ HTTP/1.1" 200 194120
+"GET /dashboard/?page=11 HTTP/1.1" 200 194993
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\comprehensive_scraper.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\dell\OneDrive\Documents\Generation Specialist\dashboard\real_job_scraper.py changed, reloading.
+Watching for file changes with StatReloader

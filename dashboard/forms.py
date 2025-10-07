@@ -128,3 +128,99 @@ class JobPortalForm(ModelForm):
             'url': TextInput(attrs={'class': 'form-control', 'placeholder': 'https://'}),
             'is_active': CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
+
+class SingleScrapeForm(forms.Form):
+    """Form for single page scraping with all required filters"""
+    
+    KEYWORD_TYPE_CHOICES = [
+        ('Technical', 'Technical'),
+        ('Non-Technical', 'Non-Technical'),
+    ]
+    
+    MARKET_CHOICES = [
+        ('USA', 'USA'),
+        ('UK', 'UK'),
+        ('Both', 'Both'),
+    ]
+    
+    JOB_TYPE_CHOICES = [
+        ('All', 'All'),
+        ('full_time', 'Full Time'),
+        ('part_time', 'Part Time'),
+        ('contract', 'Contract'),
+        ('temporary', 'Temporary'),
+        ('internship', 'Internship'),
+        ('remote', 'Remote'),
+        ('hybrid', 'Hybrid'),
+        ('on_site', 'On-site'),
+        ('freelance', 'Freelance'),
+    ]
+    
+    TIME_RANGE_CHOICES = [
+        ('24', 'Last 24 hours'),
+        ('48', 'Last 48 hours'),
+        ('72', 'Last 72 hours'),
+        ('168', 'Last 7 days'),
+        ('720', 'Last 30 days'),
+    ]
+    
+    # Get job portals for the dropdown
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Get all job portals
+        job_portals = JobPortal.objects.filter(is_active=True).order_by('name')
+        job_portal_choices = [('All', 'All Job Portals')]
+        job_portal_choices.extend([(portal.name, portal.name) for portal in job_portals])
+        
+        self.fields['job_board'] = forms.ChoiceField(
+            choices=job_portal_choices,
+            widget=Select(attrs={'class': 'form-select'}),
+            initial='All',
+            help_text='Select a specific job portal or "All" to search all portals'
+        )
+    
+    keyword_type = forms.ChoiceField(
+        choices=KEYWORD_TYPE_CHOICES,
+        widget=Select(attrs={'class': 'form-select'}),
+        initial='Technical',
+        help_text='Choose whether to search for technical or non-technical roles'
+    )
+    
+    keywords = forms.CharField(
+        max_length=500,
+        widget=Textarea(attrs={
+            'class': 'form-control',
+            'rows': 3,
+            'placeholder': 'Enter keywords (e.g., Python Developer, SEO Specialist, Marketing Manager)'
+        }),
+        help_text='Enter the job titles or keywords you want to search for'
+    )
+    
+    market = forms.ChoiceField(
+        choices=MARKET_CHOICES,
+        widget=Select(attrs={'class': 'form-select'}),
+        initial='USA',
+        help_text='Select the market to search in'
+    )
+    
+    job_type = forms.ChoiceField(
+        choices=JOB_TYPE_CHOICES,
+        widget=Select(attrs={'class': 'form-select'}),
+        initial='All',
+        help_text='Filter by job type'
+    )
+    
+    time_range = forms.ChoiceField(
+        choices=TIME_RANGE_CHOICES,
+        widget=Select(attrs={'class': 'form-select'}),
+        initial='24',
+        help_text='Filter jobs by posting date'
+    )
+    
+    def clean_keywords(self):
+        keywords = self.cleaned_data.get('keywords', '')
+        if not keywords.strip():
+            raise forms.ValidationError("Keywords are required!")
+        return keywords.strip()

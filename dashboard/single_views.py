@@ -9,12 +9,16 @@ import json
 from .models import JobListing
 from .comprehensive_scraper import ComprehensiveJobScraper
 from .google_sheets_integration import GoogleSheetsManager
+from .forms import SingleScrapeForm
 
 
 @login_required
 def single_page(request):
     """Single page with scraping form and job listings"""
     from django.core.paginator import Paginator
+    
+    # Initialize the form
+    form = SingleScrapeForm()
     
     job_listings = JobListing.objects.all().order_by('-last_updated')
     
@@ -45,7 +49,8 @@ def single_page(request):
     
     return render(request, 'dashboard/simple_dashboard.html', {
         'processed_jobs': processed_jobs,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'form': form
     })
 
 
@@ -54,48 +59,52 @@ def single_page(request):
 def single_scrape(request):
     """Handle scraping from single page"""
     try:
-        keyword_type = request.POST.get('keyword_type', 'Technical')
-        keywords = request.POST.get('keywords', '')
-        job_board = request.POST.get('job_board', 'All')
-        market = request.POST.get('market', 'USA')
-        job_type = request.POST.get('job_type', 'All')
-        time_range = request.POST.get('time_range', '24')
-
-        # Validate that keywords are provided
-        if not keywords.strip():
-            messages.error(request, 'Keywords are required!')
-            return redirect('dashboard:single-page')
-
-        # Determine if technical or non-technical
-        is_technical = keyword_type == 'Technical'
+        form = SingleScrapeForm(request.POST)
         
-        # Create scraper and run
-        scraper = ComprehensiveJobScraper()
-        
-        # Determine markets to scrape
-        markets_to_scrape = []
-        if market == 'Both':
-            markets_to_scrape = ['USA', 'UK']
+        if form.is_valid():
+            keyword_type = form.cleaned_data['keyword_type']
+            keywords = form.cleaned_data['keywords']
+            job_board = form.cleaned_data['job_board']
+            market = form.cleaned_data['market']
+            job_type = form.cleaned_data['job_type']
+            time_range = form.cleaned_data['time_range']
+
+            # Determine if technical or non-technical
+            is_technical = keyword_type == 'Technical'
+            
+            # Create scraper and run
+            scraper = ComprehensiveJobScraper()
+            
+            # Determine markets to scrape
+            markets_to_scrape = []
+            if market == 'Both':
+                markets_to_scrape = ['USA', 'UK']
+            else:
+                markets_to_scrape = [market]
+            
+            total_jobs_scraped = 0
+            
+            # Scrape for each market
+            for current_market in markets_to_scrape:
+                jobs_data = scraper.scrape_jobs(
+                    keywords=keywords,
+                    market=current_market,
+                    job_type=job_type.lower().replace('-', '_') if job_type != 'All' else 'full_time',
+                    is_technical=is_technical,
+                    hours_back=int(time_range),
+                    selected_portal=job_board  # Pass the selected portal
+                )
+                total_jobs_scraped += jobs_data  # jobs_data is the count, not a list
+
+            if total_jobs_scraped > 0:
+                messages.success(request, f'Successfully scraped {total_jobs_scraped} {keyword_type.lower()} jobs from {len(markets_to_scrape)} market(s)!')
+            else:
+                messages.warning(request, 'No jobs found with the specified criteria. Try adjusting your keywords or filters.')
         else:
-            markets_to_scrape = [market]
-        
-        total_jobs_scraped = 0
-        
-        # Scrape for each market
-        for current_market in markets_to_scrape:
-            jobs_data = scraper.scrape_jobs(
-                keywords=keywords,
-                market=current_market,
-                job_type=job_type.lower().replace('-', '_'),
-                is_technical=is_technical,
-                hours_back=int(time_range)
-            )
-            total_jobs_scraped += jobs_data  # jobs_data is the count, not a list
-
-        if total_jobs_scraped > 0:
-            messages.success(request, f'Successfully scraped {total_jobs_scraped} {keyword_type.lower()} jobs from {len(markets_to_scrape)} market(s)!')
-        else:
-            messages.warning(request, 'No jobs found with the specified criteria. Try adjusting your keywords or filters.')
+            # Form validation failed
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
         
     except Exception as e:
         messages.error(request, f'Error during scraping: {str(e)}')
@@ -105,55 +114,23 @@ def single_scrape(request):
 
 @login_required
 def single_export(request):
-    """Export jobs to Excel"""
-    import csv
-    from django.http import HttpResponse
-    
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="job_listings.csv"'
-    
-    writer = csv.writer(response)
-    
-    # Write header
-    writer.writerow([
-        'Field', 'Posted Date', 'Job Title', 'Company', 'Company URL', 'Company Size',
-        'Job Link', 'Job Portal', 'Location', 'First Name', 'Last Name', 'Title',
-        'LinkedIn', 'Email', 'Phone Number'
-    ])
-    
-    # Write data
-    jobs = JobListing.objects.all().select_related('company', 'source_job_portal').prefetch_related('company__decision_makers')
-    
-    for job in jobs:
-        # Get first decision maker
-        decision_maker = job.company.decision_makers.first() if job.company.decision_makers.exists() else None
+    """Export jobs to Excel with proper tabs and categorization"""
+    try:
+        from .excel_export import ExcelExporter
         
-        if decision_maker:
-            name_parts = decision_maker.decision_maker_name.split(' ', 1)
-            first_name = name_parts[0] if name_parts else ''
-            last_name = name_parts[1] if len(name_parts) > 1 else ''
-        else:
-            first_name = last_name = ''
+        exporter = ExcelExporter()
         
-        writer.writerow([
-            'Technical' if job.is_technical else 'Non-Technical',
-            job.posted_date.strftime('%m/%d/%Y') if job.posted_date else '',
-            job.job_title,
-            job.company.name,
-            job.company_url or '',
-            job.company_size or '',
-            job.job_link or '',
-            job.source_job_portal.name if job.source_job_portal else '',
-            job.location,
-            first_name,
-            last_name,
-            decision_maker.decision_maker_title if decision_maker else '',
-            decision_maker.decision_maker_linkedin if decision_maker else '',
-            decision_maker.decision_maker_email if decision_maker else '',
-            decision_maker.decision_maker_phone if decision_maker else '',
-        ])
-    
-    return response
+        # Try Excel export first
+        try:
+            return exporter.export_to_excel()
+        except Exception as e:
+            # Fallback to CSV if Excel fails
+            messages.warning(request, f'Excel export failed, using CSV format: {str(e)}')
+            return exporter.export_to_csv()
+            
+    except Exception as e:
+        messages.error(request, f'Export failed: {str(e)}')
+        return redirect('dashboard:single-page')
 
 
 @login_required
