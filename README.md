@@ -1,205 +1,137 @@
-# Job Scraper Pro - Complete System
+# Job Scraper Dashboard
 
-A comprehensive job scraping system that extracts job listings from 34+ job portals with decision maker data, company information, and proper categorization.
+A comprehensive job scraping and dashboard system that collects detailed job listings from various job portals and stores the data in Google Sheets.
 
-## 🚀 Features
+## Overview
 
-- **34+ Job Portals**: Scrapes from Indeed, LinkedIn, Glassdoor, and 31+ other portals
-- **Keyword-Based Scraping**: Uses exact keywords to find relevant jobs
-- **Decision Maker Data**: Extracts names, titles, emails, phone numbers, and LinkedIn profiles
-- **Company Information**: Company size, URL, and industry data
-- **Excel Export**: Properly formatted Excel files with tabs and categorization
-- **Real-Time Scraping**: Live data extraction with progress tracking
-- **User-Friendly Interface**: Clean dashboard for non-technical users
-- **Filter Options**: Job type, location, time range, and portal-specific filters
+This system allows users to scrape job listings from 36 different job portals across USA and UK markets. It extracts detailed information including job titles, companies, decision-makers, and contact information. The data is categorized and exported to Google Sheets for easy access by non-technical users.
 
-## 📋 Requirements
+## Features
 
-- Python 3.8+
-- Django 5.2.6
-- All dependencies listed in `requirements.txt`
+- **Automated Job Scraping**: Scrape job data from 36 job portals including Indeed, LinkedIn, Glassdoor, and more
+- **Comprehensive Data Collection**: Collects detailed job information including:
+  - Job title, company, location
+  - Company URL and size
+  - Decision maker names, titles, LinkedIn profiles, and email addresses
+- **User-Friendly Dashboard**: Simple interface for non-technical users
+- **Flexible Filtering**: Filter by:
+  - Market (USA/UK)
+  - Job Type (remote, hybrid, full-time, etc.)
+  - Technical vs. Non-Technical jobs
+  - Date posted (24 hours, 3 days, 7 days)
+  - Specific job portals
+- **Saved Filters**: Save and load custom filters for repeated searches
+- **Google Sheets Integration**: Automated export to Google Sheets
+- **Scheduled Submissions**: Configured for daily submissions at specific times:
+  - UK Jobs: 11:00 AM GST (Dubai time)
+  - USA Jobs: 4:00 PM GST (Dubai time)
 
-## 🛠️ Installation
+## System Requirements
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd job-scraper-dashboard
-   ```
+- Python 3.8 or higher
+- Django 5.0 or higher
+- Google Sheets API credentials (for Google Sheets integration)
+- Internet connection for scraping
 
-2. **Create virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+## Installation
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Database setup**
-   ```bash
-   python manage.py migrate
-   ```
-
-5. **Initialize job portals**
-   ```bash
-   python manage.py initialize_job_portals
-   ```
-
-6. **Create superuser**
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-7. **Run the server**
-   ```bash
-   python manage.py runserver
-   ```
-
-## 🧪 Testing the System
-
-Run the complete system test to verify everything is working:
-
+1. Clone the repository
 ```bash
-python manage.py test_complete_system --keywords "Python Developer" --market "USA" --job-type "Technical"
+git clone https://github.com/yourusername/job-scraper-dashboard.git
+cd job-scraper-dashboard
 ```
 
-This will:
-- Initialize all job portals
-- Test scraping functionality
-- Verify data quality
-- Test Excel export
-- Generate a comprehensive report
+2. Create and activate a virtual environment
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-## 📊 Usage
+3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-### 1. Access the Dashboard
-- Navigate to `http://localhost:8000`
-- Login with your superuser credentials
+4. Set up Google Sheets credentials
+   - Create a Google Cloud Platform project
+   - Enable the Google Sheets API
+   - Create a service account and download JSON credentials
+   - Place the credentials in `dashboard/google_sheets_credentials.json`
 
-### 2. Scrape Jobs
-- Select job type (Technical/Non-Technical)
-- Enter keywords (e.g., "Python Developer", "SEO Specialist")
-- Choose job board (All or specific portal)
-- Select market (USA/UK/Both)
-- Set job type filter (Remote, Hybrid, On-site, etc.)
-- Choose time range
-- Click "Start Scraping"
+5. Initialize the database
+```bash
+python manage.py migrate
+```
 
-### 3. View Results
-- Jobs are displayed in a paginated table
-- Each job shows company info, decision maker details, and contact information
-- Use the search and filter options to find specific jobs
-
-### 4. Export Data
-- **Excel Export**: Downloads properly formatted Excel file with tabs
-- **Google Sheets**: Saves directly to Google Sheets (requires setup)
-- **CSV Export**: Fallback CSV format
-
-## 📁 Excel Export Format
-
-The Excel export includes the following tabs:
-- **UK Technical**: Technical jobs from UK market
-- **UK Non-Technical**: Non-technical jobs from UK market
-- **USA Technical**: Technical jobs from USA market
-- **USA Non-Technical**: Non-technical jobs from USA market
-- **All Jobs**: Complete job listing
-- **Individual Portal Tabs**: Separate tabs for each job portal
-
-Each tab contains columns for:
-- Field (Technical/Non-Technical)
-- Posted Date
-- Job Title
-- Company
-- Company URL
-- Company Size
-- Job Link
-- Job Portal
-- Location
-- First Name (Decision Maker)
-- Last Name (Decision Maker)
-- Title (Decision Maker)
-- LinkedIn
-- Email
-- Phone Number
-
-## 🔧 Configuration
-
-### Google Sheets Integration
-1. Create a Google Cloud Project
-2. Enable Google Sheets API
-3. Create service account credentials
-4. Download the JSON key file
-5. Place it in the project root as `google_sheets_credentials.json`
-6. Share your Google Sheet with the service account email
-
-### Job Portals
-All 34 job portals are automatically initialized. You can manage them through the Django admin or by running:
-
+6. Initialize job portals
 ```bash
 python manage.py initialize_job_portals
 ```
 
-## 📈 Data Quality
+7. Create a superuser
+```bash
+python manage.py createsuperuser
+```
 
-The system ensures high data quality by:
-- **Company Diversity**: No repeated companies across portals
-- **Keyword Matching**: Jobs match the exact keywords provided
-- **Complete Decision Maker Data**: Names, titles, emails, phones, LinkedIn
-- **Company Size Detection**: All company sizes including 11-50 employees
-- **Realistic Data**: Uses real company names and realistic contact information
+8. Run the development server
+```bash
+python manage.py runserver
+```
 
-## 🚨 Important Notes
+## Usage
 
-1. **Rate Limiting**: The system includes delays to avoid being blocked by job portals
-2. **Data Privacy**: All data is handled securely and privately
-3. **Compliance**: Respects robots.txt and terms of service
-4. **Backup**: Always backup your data before major operations
+### Dashboard
 
-## 🐛 Troubleshooting
+1. Navigate to the dashboard at `http://localhost:8000/`
+2. Log in using your credentials
+3. Use the filter form to configure your search:
+   - Enter job keywords (e.g., "Python Developer", "SEO Specialist")
+   - Select market, job type, and other filters
+   - Click "Start Scraping" to begin the job search
 
-### Common Issues
+### Scheduled Tasks
 
-1. **No jobs found**
-   - Check your keywords
-   - Verify the selected job portal is active
-   - Try different time ranges
+The system includes scheduled tasks for regular job scraping and Google Sheets updates:
 
-2. **Export fails**
-   - Ensure pandas and openpyxl are installed
-   - Check file permissions
-   - Try CSV export as fallback
+- **Daily Scraping**: Automatically scrapes job listings once per day
+- **UK Export**: Submits UK job data at 11:00 AM GST (Dubai time)
+- **USA Export**: Submits USA job data at 4:00 PM GST (Dubai time)
 
-3. **Google Sheets not working**
-   - Verify credentials file exists
-   - Check service account permissions
-   - Ensure sheet is shared with service account
+To set up the scheduler:
+```bash
+python scheduler.py
+```
 
-### Debug Mode
-Enable debug logging by setting `DEBUG = True` in settings.py
+## Technical Details
 
-## 📞 Support
+### Components
 
-For issues or questions:
-1. Check the troubleshooting section
-2. Run the system test command
-3. Check the debug logs
-4. Contact the development team
+- **ComprehensiveJobScraper**: Main scraper engine that handles job extraction
+- **DecisionMakerExtractor**: Specialized component for extracting decision maker information
+- **GoogleSheetsExporter**: Handles exporting data to Google Sheets
+- **KeywordCategorizer**: Categorizes jobs as technical or non-technical
+- **Anti-Block System**: Protection against scraper detection
 
-## 🔄 Updates
+### Job Portals
 
-To update the system:
-1. Pull latest changes
-2. Run migrations: `python manage.py migrate`
-3. Update job portals: `python manage.py initialize_job_portals`
-4. Test the system: `python manage.py test_complete_system`
+The system is configured to scrape from 36 job portals including:
 
-## 📝 License
+- Indeed UK
+- LinkedIn Jobs
+- CV-Library
+- Adzuna
+- Totaljobs
+- Reed
+- Talent
+- Glassdoor
+- ZipRecruiter
+- And 27 more...
 
-This project is proprietary software. All rights reserved.
+## License
 
----
+This project is proprietary and confidential. Unauthorized copying, distribution, or use is strictly prohibited.
 
-**Job Scraper Pro** - Professional job data extraction and management system.
+## Contact
+
+For support or inquiries, please contact:
+- Email: your.email@example.com

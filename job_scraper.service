@@ -1,0 +1,19 @@
+[Unit]
+Description=Job Scraper Scheduler Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/job-scraper-dashboard
+ExecStart=/usr/bin/python3 /var/www/job-scraper-dashboard/scheduler.py
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=job-scraper
+Environment=PYTHONUNBUFFERED=1
+Environment=CLIENT_EMAIL=client@example.com
+
+[Install]
+WantedBy=multi-user.target

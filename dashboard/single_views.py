@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 import json
 
 from .models import JobListing
-from .comprehensive_scraper import ComprehensiveJobScraper
+from .real_time_scraper import RealTimeScraper
 from .google_sheets_integration import GoogleSheetsManager
 from .forms import SingleScrapeForm
 
@@ -73,7 +73,7 @@ def single_scrape(request):
             is_technical = keyword_type == 'Technical'
             
             # Create scraper and run
-            scraper = ComprehensiveJobScraper()
+            scraper = RealTimeScraper()
             
             # Determine markets to scrape
             markets_to_scrape = []
@@ -92,7 +92,7 @@ def single_scrape(request):
                     job_type=job_type.lower().replace('-', '_') if job_type != 'All' else 'full_time',
                     is_technical=is_technical,
                     hours_back=int(time_range),
-                    selected_portal=job_board  # Pass the selected portal
+                    job_board=job_board  # Pass the selected portal
                 )
                 total_jobs_scraped += jobs_data  # jobs_data is the count, not a list
 

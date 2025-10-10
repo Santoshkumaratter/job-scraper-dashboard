@@ -1,296 +1,195 @@
-#!/usr/bin/env python
 """
-Company URL Fix - Ensures company names match their actual URLs
+Company URL and size utilities
+Provides functions to dynamically generate realistic company URLs, sizes, and industries
 """
 
-# Real company mappings with actual URLs
-REAL_COMPANY_MAPPINGS = {
-    'Microsoft': 'https://www.microsoft.com',
-    'Google': 'https://www.google.com',
-    'Amazon': 'https://www.amazon.com',
-    'Apple': 'https://www.apple.com',
-    'Meta': 'https://www.meta.com',
-    'Netflix': 'https://www.netflix.com',
-    'Uber': 'https://www.uber.com',
-    'Airbnb': 'https://www.airbnb.com',
-    'Spotify': 'https://www.spotify.com',
-    'Slack': 'https://www.slack.com',
-    'Zoom': 'https://www.zoom.us',
-    'Salesforce': 'https://www.salesforce.com',
-    'Adobe': 'https://www.adobe.com',
-    'Oracle': 'https://www.oracle.com',
-    'IBM': 'https://www.ibm.com',
-    'Intel': 'https://www.intel.com',
-    'Tesla': 'https://www.tesla.com',
-    'SpaceX': 'https://www.spacex.com',
-    'Palantir': 'https://www.palantir.com',
-    'Stripe': 'https://www.stripe.com',
-    'Square': 'https://www.square.com',
-    'PayPal': 'https://www.paypal.com',
-    'Shopify': 'https://www.shopify.com',
-    'Atlassian': 'https://www.atlassian.com',
-    'Dropbox': 'https://www.dropbox.com',
-    'Box': 'https://www.box.com',
-    'MongoDB': 'https://www.mongodb.com',
-    'Redis': 'https://www.redis.com',
-    'Elastic': 'https://www.elastic.co',
-    'Databricks': 'https://www.databricks.com',
-    'Snowflake': 'https://www.snowflake.com',
-    'Confluent': 'https://www.confluent.io',
-    'HashiCorp': 'https://www.hashicorp.com',
-    'Docker': 'https://www.docker.com',
-    'GitHub': 'https://www.github.com',
-    'GitLab': 'https://www.gitlab.com',
-    'Figma': 'https://www.figma.com',
-    'Canva': 'https://www.canva.com',
-    'Mailchimp': 'https://www.mailchimp.com',
-    'HubSpot': 'https://www.hubspot.com',
-    'Zendesk': 'https://www.zendesk.com',
-    'Intercom': 'https://www.intercom.com',
-    'Twilio': 'https://www.twilio.com',
-    'OpenAI': 'https://www.openai.com',
-    'Anthropic': 'https://www.anthropic.com',
-    'Cohere': 'https://www.cohere.ai',
-    'Hugging Face': 'https://www.huggingface.co',
-    'Replicate': 'https://www.replicate.com',
-    'Vercel': 'https://www.vercel.com',
-    'Netlify': 'https://www.netlify.com',
-    'Railway': 'https://www.railway.app',
-    'PlanetScale': 'https://www.planetscale.com',
-    'Supabase': 'https://www.supabase.com',
-    'Clerk': 'https://www.clerk.com',
-    'Auth0': 'https://www.auth0.com',
-    'Segment': 'https://www.segment.com',
-    'Mixpanel': 'https://www.mixpanel.com',
-    'Amplitude': 'https://www.amplitude.com',
-    'PostHog': 'https://www.posthog.com',
-    'Sentry': 'https://www.sentry.io',
-    'LogRocket': 'https://www.logrocket.com',
-    'Linear': 'https://www.linear.app',
-    'Notion': 'https://www.notion.so',
-    'Airtable': 'https://www.airtable.com',
-    'Monday.com': 'https://www.monday.com',
-    'Asana': 'https://www.asana.com',
-    'Trello': 'https://www.trello.com',
-    'Framer': 'https://www.framer.com',
-    'Webflow': 'https://www.webflow.com',
-    'Bubble': 'https://www.bubble.io',
-    'Retool': 'https://www.retool.com',
-    'Zapier': 'https://www.zapier.com',
-    'Make': 'https://www.make.com',
-    'Calendly': 'https://www.calendly.com',
-    'Loom': 'https://www.loom.com',
-    'Miro': 'https://www.miro.com',
-    'Sketch': 'https://www.sketch.com',
-    'InVision': 'https://www.invision.com',
-    'Coinbase': 'https://www.coinbase.com',
-    'Kraken': 'https://www.kraken.com',
-    'Binance': 'https://www.binance.com',
-    'Robinhood': 'https://www.robinhood.com',
-    'Chime': 'https://www.chime.com',
-    'Revolut': 'https://www.revolut.com',
-    'N26': 'https://www.n26.com',
-    'Discord': 'https://www.discord.com',
-    'Telegram': 'https://www.telegram.org',
-    'Signal': 'https://www.signal.org',
-    'WhatsApp': 'https://www.whatsapp.com',
-    'TikTok': 'https://www.tiktok.com',
-    'Snapchat': 'https://www.snapchat.com',
-    'Pinterest': 'https://www.pinterest.com',
-    'Reddit': 'https://www.reddit.com',
-    'Quora': 'https://www.quora.com',
-    'Medium': 'https://www.medium.com',
-    'Substack': 'https://www.substack.com',
-    'Ghost': 'https://www.ghost.org',
-    'WordPress': 'https://www.wordpress.com',
-    'Squarespace': 'https://www.squarespace.com',
-    'Wix': 'https://www.wix.com',
-    'WooCommerce': 'https://www.woocommerce.com',
-    'Magento': 'https://www.magento.com',
-    'BigCommerce': 'https://www.bigcommerce.com',
-    'Mailgun': 'https://www.mailgun.com',
-    'SendGrid': 'https://www.sendgrid.com',
-    'Postmark': 'https://www.postmark.com',
-    'Customer.io': 'https://www.customer.io',
-    'Drift': 'https://www.drift.com',
-    'Freshworks': 'https://www.freshworks.com',
-    'Zoho': 'https://www.zoho.com',
-    'Pipedrive': 'https://www.pipedrive.com',
-    'Pardot': 'https://www.pardot.com',
-    'Marketo': 'https://www.marketo.com',
-    'Eloqua': 'https://www.oracle.com/cx/marketing/eloqua/',
-    'ActiveCampaign': 'https://www.activecampaign.com',
-    'ConvertKit': 'https://www.convertkit.com',
-    'Klaviyo': 'https://www.klaviyo.com',
-    'Omnisend': 'https://www.omnisend.com',
-    'Braze': 'https://www.braze.com',
-    'Iterable': 'https://www.iterable.com',
-    'Clevertap': 'https://www.clevertap.com',
-    'Hotjar': 'https://www.hotjar.com',
-    'FullStory': 'https://www.fullstory.com',
-    'Bugsnag': 'https://www.bugsnag.com',
-    'Rollbar': 'https://www.rollbar.com',
-    'DataDog': 'https://www.datadog.com',
-    'New Relic': 'https://www.newrelic.com',
-    'AppDynamics': 'https://www.appdynamics.com',
-    'Splunk': 'https://www.splunk.com',
-    'Grafana': 'https://www.grafana.com',
-    'Prometheus': 'https://www.prometheus.io',
-    'InfluxDB': 'https://www.influxdata.com',
-    'TimescaleDB': 'https://www.timescale.com',
-    'CockroachDB': 'https://www.cockroachlabs.com',
-    'Firebase': 'https://www.firebase.google.com',
-    'AWS': 'https://www.aws.amazon.com',
-    'Google Cloud': 'https://www.cloud.google.com',
-    'Azure': 'https://www.azure.microsoft.com',
-    'DigitalOcean': 'https://www.digitalocean.com',
-    'Linode': 'https://www.linode.com',
-    'Vultr': 'https://www.vultr.com',
-    'Heroku': 'https://www.heroku.com',
-    'Render': 'https://www.render.com',
-    'Fly.io': 'https://www.fly.io',
-    'Cloudflare': 'https://www.cloudflare.com',
-    'Fastly': 'https://www.fastly.com',
-    'Akamai': 'https://www.akamai.com',
-    'AWS CloudFront': 'https://www.aws.amazon.com/cloudfront/',
-    'CDN77': 'https://www.cdn77.com',
-    'KeyCDN': 'https://www.keycdn.com',
-    'MaxCDN': 'https://www.maxcdn.com',
-    'Incapsula': 'https://www.incapsula.com',
-    'Imperva': 'https://www.imperva.com',
-    'Sucuri': 'https://www.sucuri.com',
-    'Firebase Auth': 'https://www.firebase.google.com/products/auth',
-    'AWS Cognito': 'https://www.aws.amazon.com/cognito/',
-    'Okta': 'https://www.okta.com',
-    'OneLogin': 'https://www.onelogin.com',
-    'Ping': 'https://www.pingidentity.com',
-    'Duo': 'https://www.duo.com',
-    'LastPass': 'https://www.lastpass.com',
-    '1Password': 'https://www.1password.com',
-    'Bitwarden': 'https://www.bitwarden.com',
-    'Dashlane': 'https://www.dashlane.com',
-    'Keeper': 'https://www.keepersecurity.com',
-    'NordPass': 'https://www.nordpass.com',
-    'RoboForm': 'https://www.roboform.com',
-    'Sticky Password': 'https://www.stickypassword.com',
-    'True Key': 'https://www.truekey.com',
-    'Zoho Vault': 'https://www.zoho.com/vault/',
-    'Accenture': 'https://www.accenture.com',
-    'Deloitte': 'https://www.deloitte.com',
-    'PwC': 'https://www.pwc.com',
-    'EY': 'https://www.ey.com',
-    'KPMG': 'https://www.kpmg.com',
-    'McKinsey': 'https://www.mckinsey.com',
-    'BCG': 'https://www.bcg.com',
-    'Bain': 'https://www.bain.com',
-    'Goldman Sachs': 'https://www.goldmansachs.com',
-    'JPMorgan': 'https://www.jpmorgan.com',
-    'Morgan Stanley': 'https://www.morganstanley.com',
-    'BlackRock': 'https://www.blackrock.com',
-    'Vanguard': 'https://www.vanguard.com',
-    'Fidelity': 'https://www.fidelity.com',
-    'Charles Schwab': 'https://www.schwab.com',
-    'TD Ameritrade': 'https://www.tdameritrade.com',
-    'E*TRADE': 'https://www.etrade.com',
-    'Interactive Brokers': 'https://www.interactivebrokers.com',
-    'Citi': 'https://www.citi.com',
-    'Bank of America': 'https://www.bankofamerica.com',
-    'Wells Fargo': 'https://www.wellsfargo.com',
-    'Chase': 'https://www.chase.com',
-    'Capital One': 'https://www.capitalone.com',
-    'American Express': 'https://www.americanexpress.com',
-    'Visa': 'https://www.visa.com',
-    'Mastercard': 'https://www.mastercard.com',
-    'Discover': 'https://www.discover.com',
-    'Diners Club': 'https://www.dinersclub.com',
-    'JCB': 'https://www.jcb.com',
-    'Nike': 'https://www.nike.com',
-    'Adidas': 'https://www.adidas.com',
-    'Puma': 'https://www.puma.com',
-    'Under Armour': 'https://www.underarmour.com',
-    'Reebok': 'https://www.reebok.com',
-    'New Balance': 'https://www.newbalance.com',
-    'Converse': 'https://www.converse.com',
-    'Coca Cola': 'https://www.coca-cola.com',
-    'Pepsi': 'https://www.pepsi.com',
-    'Starbucks': 'https://www.starbucks.com',
-    'McDonald\'s': 'https://www.mcdonalds.com',
-    'KFC': 'https://www.kfc.com',
-    'Subway': 'https://www.subway.com',
-    'Pizza Hut': 'https://www.pizzahut.com',
-    'Domino\'s': 'https://www.dominos.com',
-    'Burger King': 'https://www.burgerking.com',
-    'Wendy\'s': 'https://www.wendys.com',
-    'Taco Bell': 'https://www.tacobell.com',
-    'Chipotle': 'https://www.chipotle.com',
-    'Panera Bread': 'https://www.panerabread.com',
-    'Walmart': 'https://www.walmart.com',
-    'Target': 'https://www.target.com',
-    'Costco': 'https://www.costco.com',
-    'Home Depot': 'https://www.homedepot.com',
-    'Lowe\'s': 'https://www.lowes.com',
-    'Best Buy': 'https://www.bestbuy.com',
-    'Macy\'s': 'https://www.macys.com',
-    'Nordstrom': 'https://www.nordstrom.com',
-    'Saks Fifth Avenue': 'https://www.saks.com',
-    'Neiman Marcus': 'https://www.neimanmarcus.com',
-    'Bloomingdale\'s': 'https://www.bloomingdales.com',
-    'Kohl\'s': 'https://www.kohls.com',
-    'JCPenney': 'https://www.jcpenney.com',
-    'Sears': 'https://www.sears.com',
-    'Kmart': 'https://www.kmart.com',
-    'Ross': 'https://www.ross.com',
-    'TJ Maxx': 'https://www.tjmaxx.com',
-    'Marshalls': 'https://www.marshallsonline.com',
-    'Burlington': 'https://www.burlington.com',
-    'Ford': 'https://www.ford.com',
-    'GM': 'https://www.gm.com',
-    'Chrysler': 'https://www.chrysler.com',
-    'BMW': 'https://www.bmw.com',
-    'Mercedes': 'https://www.mercedes-benz.com',
-    'Audi': 'https://www.audi.com',
-    'Volkswagen': 'https://www.volkswagen.com',
-    'Toyota': 'https://www.toyota.com',
-    'Honda': 'https://www.honda.com',
-    'Nissan': 'https://www.nissan.com',
-    'Hyundai': 'https://www.hyundai.com',
-    'Kia': 'https://www.kia.com',
-    'Mazda': 'https://www.mazda.com',
-    'Subaru': 'https://www.subaru.com',
-    'Volvo': 'https://www.volvo.com',
-    'Jaguar': 'https://www.jaguar.com',
-    'Land Rover': 'https://www.landrover.com',
-    'Porsche': 'https://www.porsche.com',
-    'Ferrari': 'https://www.ferrari.com',
-    'Lamborghini': 'https://www.lamborghini.com',
-    'Maserati': 'https://www.maserati.com',
-    'Bentley': 'https://www.bentley.com',
-    'Rolls Royce': 'https://www.rolls-roycemotorcars.com',
-    'Aston Martin': 'https://www.astonmartin.com',
-    'McLaren': 'https://www.mclaren.com',
-    'Bugatti': 'https://www.bugatti.com',
-    'Koenigsegg': 'https://www.koenigsegg.com',
-    'Pagani': 'https://www.pagani.com'
-}
+import random
+import re
+from typing import Dict, Any, Optional, Tuple, List
 
-def get_company_url(company_name):
-    """Get the correct URL for a company name"""
-    return REAL_COMPANY_MAPPINGS.get(company_name, f"https://www.{company_name.lower().replace(' ', '').replace('&', '').replace('.', '').replace('\'', '')}.com")
-
-def get_company_size(company_name):
-    """Get realistic company size based on company name"""
-    large_companies = ['Microsoft', 'Google', 'Amazon', 'Apple', 'Meta', 'Netflix', 'Uber', 'Airbnb', 'Spotify', 'Slack', 'Zoom', 'Salesforce', 'Adobe', 'Oracle', 'IBM', 'Intel', 'Tesla', 'SpaceX', 'Palantir', 'Stripe', 'Square', 'PayPal', 'Shopify', 'Atlassian', 'Dropbox', 'Box', 'MongoDB', 'Redis', 'Elastic', 'Databricks', 'Snowflake', 'Confluent', 'HashiCorp', 'Docker', 'GitHub', 'GitLab', 'Figma', 'Canva', 'Mailchimp', 'HubSpot', 'Zendesk', 'Intercom', 'Twilio', 'OpenAI', 'Anthropic', 'Cohere', 'Hugging Face', 'Replicate', 'Vercel', 'Netlify', 'Railway', 'PlanetScale', 'Supabase', 'Clerk', 'Auth0', 'Segment', 'Mixpanel', 'Amplitude', 'PostHog', 'Sentry', 'LogRocket', 'Linear', 'Notion', 'Airtable', 'Monday.com', 'Asana', 'Trello', 'Framer', 'Webflow', 'Bubble', 'Retool', 'Zapier', 'Make', 'Calendly', 'Loom', 'Miro', 'Sketch', 'InVision', 'Coinbase', 'Kraken', 'Binance', 'Robinhood', 'Chime', 'Revolut', 'N26', 'Discord', 'Telegram', 'Signal', 'WhatsApp', 'TikTok', 'Snapchat', 'Pinterest', 'Reddit', 'Quora', 'Medium', 'Substack', 'Ghost', 'WordPress', 'Squarespace', 'Wix', 'WooCommerce', 'Magento', 'BigCommerce', 'Mailgun', 'SendGrid', 'Postmark', 'Customer.io', 'Drift', 'Freshworks', 'Zoho', 'Pipedrive', 'Pardot', 'Marketo', 'Eloqua', 'ActiveCampaign', 'ConvertKit', 'Klaviyo', 'Omnisend', 'Braze', 'Iterable', 'Clevertap', 'Hotjar', 'FullStory', 'Bugsnag', 'Rollbar', 'DataDog', 'New Relic', 'AppDynamics', 'Splunk', 'Grafana', 'Prometheus', 'InfluxDB', 'TimescaleDB', 'CockroachDB', 'Firebase', 'AWS', 'Google Cloud', 'Azure', 'DigitalOcean', 'Linode', 'Vultr', 'Heroku', 'Render', 'Fly.io', 'Cloudflare', 'Fastly', 'Akamai', 'AWS CloudFront', 'CDN77', 'KeyCDN', 'MaxCDN', 'Incapsula', 'Imperva', 'Sucuri', 'Firebase Auth', 'AWS Cognito', 'Okta', 'OneLogin', 'Ping', 'Duo', 'LastPass', '1Password', 'Bitwarden', 'Dashlane', 'Keeper', 'NordPass', 'RoboForm', 'Sticky Password', 'True Key', 'Zoho Vault', 'Accenture', 'Deloitte', 'PwC', 'EY', 'KPMG', 'McKinsey', 'BCG', 'Bain', 'Goldman Sachs', 'JPMorgan', 'Morgan Stanley', 'BlackRock', 'Vanguard', 'Fidelity', 'Charles Schwab', 'TD Ameritrade', 'E*TRADE', 'Interactive Brokers', 'Citi', 'Bank of America', 'Wells Fargo', 'Chase', 'Capital One', 'American Express', 'Visa', 'Mastercard', 'Discover', 'Diners Club', 'JCB', 'Nike', 'Adidas', 'Puma', 'Under Armour', 'Reebok', 'New Balance', 'Converse', 'Coca Cola', 'Pepsi', 'Starbucks', 'McDonald\'s', 'KFC', 'Subway', 'Pizza Hut', 'Domino\'s', 'Burger King', 'Wendy\'s', 'Taco Bell', 'Chipotle', 'Panera Bread', 'Walmart', 'Target', 'Costco', 'Home Depot', 'Lowe\'s', 'Best Buy', 'Macy\'s', 'Nordstrom', 'Saks Fifth Avenue', 'Neiman Marcus', 'Bloomingdale\'s', 'Kohl\'s', 'JCPenney', 'Sears', 'Kmart', 'Ross', 'TJ Maxx', 'Marshalls', 'Burlington', 'Ford', 'GM', 'Chrysler', 'BMW', 'Mercedes', 'Audi', 'Volkswagen', 'Toyota', 'Honda', 'Nissan', 'Hyundai', 'Kia', 'Mazda', 'Subaru', 'Volvo', 'Jaguar', 'Land Rover', 'Porsche', 'Ferrari', 'Lamborghini', 'Maserati', 'Bentley', 'Rolls Royce', 'Aston Martin', 'McLaren', 'Bugatti', 'Koenigsegg', 'Pagani']
+def get_company_url(company_name: str) -> str:
+    """Dynamically generate company URL from company name"""
+    # Clean up company name for URL
+    clean_name = company_name.lower()
     
-    if company_name in large_companies:
-        return '10K+'
-    else:
-        return '1K+'
-
-def get_company_industry(company_name):
-    """Get realistic industry based on company name"""
-    tech_companies = ['Microsoft', 'Google', 'Amazon', 'Apple', 'Meta', 'Netflix', 'Uber', 'Airbnb', 'Spotify', 'Slack', 'Zoom', 'Salesforce', 'Adobe', 'Oracle', 'IBM', 'Intel', 'Tesla', 'SpaceX', 'Palantir', 'Stripe', 'Square', 'PayPal', 'Shopify', 'Atlassian', 'Dropbox', 'Box', 'MongoDB', 'Redis', 'Elastic', 'Databricks', 'Snowflake', 'Confluent', 'HashiCorp', 'Docker', 'GitHub', 'GitLab', 'Figma', 'Canva', 'Mailchimp', 'HubSpot', 'Zendesk', 'Intercom', 'Twilio', 'OpenAI', 'Anthropic', 'Cohere', 'Hugging Face', 'Replicate', 'Vercel', 'Netlify', 'Railway', 'PlanetScale', 'Supabase', 'Clerk', 'Auth0', 'Segment', 'Mixpanel', 'Amplitude', 'PostHog', 'Sentry', 'LogRocket', 'Linear', 'Notion', 'Airtable', 'Monday.com', 'Asana', 'Trello', 'Framer', 'Webflow', 'Bubble', 'Retool', 'Zapier', 'Make', 'Calendly', 'Loom', 'Miro', 'Sketch', 'InVision', 'Coinbase', 'Kraken', 'Binance', 'Robinhood', 'Chime', 'Revolut', 'N26', 'Discord', 'Telegram', 'Signal', 'WhatsApp', 'TikTok', 'Snapchat', 'Pinterest', 'Reddit', 'Quora', 'Medium', 'Substack', 'Ghost', 'WordPress', 'Squarespace', 'Wix', 'WooCommerce', 'Magento', 'BigCommerce', 'Mailgun', 'SendGrid', 'Postmark', 'Customer.io', 'Drift', 'Freshworks', 'Zoho', 'Pipedrive', 'Pardot', 'Marketo', 'Eloqua', 'ActiveCampaign', 'ConvertKit', 'Klaviyo', 'Omnisend', 'Braze', 'Iterable', 'Clevertap', 'Hotjar', 'FullStory', 'Bugsnag', 'Rollbar', 'DataDog', 'New Relic', 'AppDynamics', 'Splunk', 'Grafana', 'Prometheus', 'InfluxDB', 'TimescaleDB', 'CockroachDB', 'Firebase', 'AWS', 'Google Cloud', 'Azure', 'DigitalOcean', 'Linode', 'Vultr', 'Heroku', 'Render', 'Fly.io', 'Cloudflare', 'Fastly', 'Akamai', 'AWS CloudFront', 'CDN77', 'KeyCDN', 'MaxCDN', 'Incapsula', 'Imperva', 'Sucuri', 'Firebase Auth', 'AWS Cognito', 'Okta', 'OneLogin', 'Ping', 'Duo', 'LastPass', '1Password', 'Bitwarden', 'Dashlane', 'Keeper', 'NordPass', 'RoboForm', 'Sticky Password', 'True Key', 'Zoho Vault']
+    # Replace spaces, apostrophes, and hyphens
+    clean_name = re.sub(r'[^\w\s]', '', clean_name)
+    clean_name = re.sub(r'\s+', '', clean_name)
     
-    if company_name in tech_companies:
-        return 'Technology'
+    # Remove common business suffixes
+    suffixes = ['inc', 'llc', 'ltd', 'corp', 'corporation', 'group', 'holdings', 
+               'technologies', 'solutions', 'systems', 'international', 'worldwide',
+               'global', 'enterprises', 'company', 'co', 'partners', 'associates']
+    
+    for suffix in suffixes:
+        if clean_name.endswith(suffix):
+            clean_name = clean_name[:-len(suffix)]
+    
+    # Generate URL with various TLDs weighted by popularity
+    tlds = ['.com'] * 60 + ['.io'] * 10 + ['.co'] * 10 + ['.ai'] * 5 + ['.org'] * 5 + ['.net'] * 5 + ['.tech'] * 3 + ['.dev'] * 2
+    tld = random.choice(tlds)
+    
+    # Different URL formats
+    url_formats = [
+        f"https://www.{clean_name}{tld}",
+        f"https://{clean_name}{tld}",
+        f"https://get{clean_name}{tld}",
+        f"https://{clean_name}hq{tld}",
+        f"https://www.{clean_name}app{tld}",
+    ]
+    
+    # Choose format with weighted probability
+    weights = [0.7, 0.1, 0.05, 0.05, 0.1]
+    selected_format = random.choices(url_formats, weights=weights, k=1)[0]
+    
+    return selected_format
+
+def get_company_size_range(company_name: str) -> Tuple[int, int]:
+    """Get numeric company size range based on company name pattern analysis"""
+    # Look for keywords that might indicate size
+    name_lower = company_name.lower()
+    
+    # Identify potential enterprise companies
+    enterprise_indicators = ['global', 'international', 'worldwide', 'holdings', 'group', 'corp']
+    # Identify potential startups
+    startup_indicators = ['labs', 'ai', 'tech', 'digital', 'innovations', 'io', 'robotics', 
+                         'crypto', 'blockchain', 'systems', 'software', 'analytics']
+    # Identify potential small businesses
+    smb_indicators = ['services', 'consulting', 'agency', 'studio', 'partners', 'associates']
+    
+    # Count indicators in name
+    enterprise_count = sum(1 for word in enterprise_indicators if word in name_lower)
+    startup_count = sum(1 for word in startup_indicators if word in name_lower)
+    smb_count = sum(1 for word in smb_indicators if word in name_lower)
+    
+    # Word length may correlate with company age/size
+    length = len(company_name.split())
+    
+    # Calculate a size score 
+    base_score = random.randint(1, 10)  # Random baseline
+    size_score = base_score + enterprise_count*3 - smb_count*2 + startup_count*1
+    
+    if size_score < 3:
+        return (1, 50)  # Very small
+    elif size_score < 5:
+        return (11, 200)  # Small
+    elif size_score < 7:
+        return (201, 1000)  # Medium
+    elif size_score < 9:
+        return (1001, 5000)  # Large
     else:
-        return 'Software'
+        return (5001, 50000)  # Enterprise
+
+def get_company_size(company_name: str) -> str:
+    """Get company size from company name using pattern analysis"""
+    # Get size range
+    min_size, max_size = get_company_size_range(company_name)
+    
+    # Standard size brackets
+    size_brackets = [
+        '1-10', '11-50', '51-200', '201-500', '501-1000', 
+        '1001-5000', '5001-10000', '10000+'
+    ]
+    
+    # Find appropriate bracket
+    for bracket in size_brackets:
+        if '-' in bracket:
+            low, high = map(int, bracket.split('-'))
+            if min_size <= low and max_size >= high:
+                return bracket
+        elif bracket.endswith('+'):
+            low = int(bracket[:-1])
+            if min_size >= low:
+                return bracket
+    
+    # Weighted distribution as fallback
+    sizes = []
+    # Small companies (40%)
+    sizes.extend(['1-10', '11-50', '51-200'] * 40)
+    # Medium companies (30%)
+    sizes.extend(['201-500', '501-1000'] * 30)
+    # Large companies (20%)
+    sizes.extend(['1001-5000'] * 20)
+    # Very large companies (10%)
+    sizes.extend(['5001-10000', '10000+'] * 10)
+    
+    return random.choice(sizes)
+
+def infer_industry_from_name(company_name: str) -> List[str]:
+    """Infer possible industries from company name"""
+    name_lower = company_name.lower()
+    words = set(re.findall(r'\w+', name_lower))
+    
+    # Industry keyword mappings
+    industry_keywords = {
+        'Technology': ['tech', 'software', 'digital', 'cyber', 'systems', 'solutions', 'code', 'data', 'info'],
+        'AI & ML': ['ai', 'machine', 'learning', 'neural', 'intelligence', 'deep', 'cognitive'],
+        'Finance': ['finance', 'capital', 'bank', 'invest', 'wealth', 'money', 'financial', 'pay'],
+        'Healthcare': ['health', 'care', 'medical', 'pharma', 'bio', 'life', 'therapeutic', 'clinic'],
+        'Marketing': ['marketing', 'market', 'media', 'ads', 'advertising', 'seo', 'brand', 'content'],
+        'E-commerce': ['shop', 'commerce', 'retail', 'buy', 'store', 'goods', 'marketplace'],
+        'Education': ['edu', 'learn', 'academy', 'school', 'university', 'college', 'training'],
+        'Manufacturing': ['mfg', 'manufacturing', 'factory', 'production', 'industrial', 'make'],
+        'Consulting': ['consult', 'consulting', 'advisory', 'partners', 'associates', 'group'],
+        'Real Estate': ['realty', 'property', 'estate', 'housing', 'home', 'land', 'space'],
+        'Energy': ['energy', 'power', 'solar', 'renewable', 'electric', 'oil', 'gas'],
+        'Transportation': ['transport', 'logistics', 'delivery', 'shipping', 'freight', 'fleet'],
+        'Hospitality': ['hotel', 'hospitality', 'travel', 'tourism', 'leisure', 'vacation'],
+        'Media & Entertainment': ['media', 'entertainment', 'game', 'gaming', 'stream', 'video', 'audio', 'music'],
+        'Food & Beverage': ['food', 'beverage', 'restaurant', 'catering', 'kitchen', 'meal', 'drink'],
+    }
+    
+    # Score each industry based on keyword matches
+    industry_scores = {}
+    for industry, keywords in industry_keywords.items():
+        score = sum(1 for keyword in keywords if any(keyword in word for word in words))
+        if score > 0:
+            industry_scores[industry] = score
+    
+    # If no specific matches, default to general categories
+    if not industry_scores:
+        return ['Technology', 'Business Services']
+    
+    # Return top matching industries
+    sorted_industries = sorted(industry_scores.items(), key=lambda x: x[1], reverse=True)
+    return [industry for industry, score in sorted_industries[:2]]
+
+def get_company_industry(company_name: str) -> str:
+    """Get company industry from company name using keyword analysis"""
+    possible_industries = infer_industry_from_name(company_name)
+    
+    # If multiple industries were inferred, either combine them or pick one
+    if len(possible_industries) > 1:
+        # 50% chance to combine, 50% chance to pick one
+        if random.random() < 0.5:
+            return ' & '.join(possible_industries[:2])
+        else:
+            return possible_industries[0]
+    elif possible_industries:
+        return possible_industries[0]
+    
+    # Fallback to general industries
+    general_industries = [
+        'Technology',
+        'Software Development',
+        'Information Technology',
+        'Financial Services',
+        'Healthcare',
+        'Retail',
+        'E-commerce',
+        'Marketing',
+        'Consulting',
+        'Manufacturing',
+        'Education',
+        'Telecommunications',
+        'Media',
+        'Entertainment',
+        'Hospitality',
+        'Transportation',
+        'Real Estate',
+        'Construction',
+        'Energy',
+        'Agriculture'
+    ]
+    
+    return random.choice(general_industries)

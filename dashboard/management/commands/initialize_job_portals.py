@@ -1,87 +1,80 @@
-#!/usr/bin/env python
-"""
-Management command to initialize all job portals in the database
-"""
-
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from dashboard.models import JobPortal
 
-
 class Command(BaseCommand):
-    help = 'Initialize all job portals in the database'
+    help = 'Initialize all required job portals in the database'
 
     def handle(self, *args, **options):
-        # All job portals as per client requirements
-        job_portals = {
-            'Indeed UK': 'https://uk.indeed.com',
-            'Indeed US': 'https://www.indeed.com',
-            'LinkedIn Jobs': 'https://www.linkedin.com/jobs',
-            'CV-Library': 'https://www.cv-library.co.uk',
-            'Adzuna': 'https://www.adzuna.com',
-            'Totaljobs': 'https://www.totaljobs.com',
-            'Reed': 'https://www.reed.co.uk',
-            'Talent': 'https://www.talent.com',
-            'Glassdoor': 'https://www.glassdoor.com',
-            'ZipRecruiter': 'https://www.ziprecruiter.com',
-            'CWjobs': 'https://www.cwjobs.co.uk',
-            'Jobsora': 'https://jobsora.com',
-            'WelcometotheJungle': 'https://www.welcometothejungle.com',
-            'IT Job Board': 'https://www.itjobboard.co.uk',
-            'Trueup': 'https://www.trueup.io',
-            'Redefined': 'https://www.redefined.co.uk',
-            'We Work Remotely': 'https://weworkremotely.com',
-            'AngelList': 'https://angel.co',
-            'Jobspresso': 'https://jobspresso.co',
-            'Grabjobs': 'https://www.grabjobs.co.uk',
-            'Remote OK': 'https://remoteok.io',
-            'Working Nomads': 'https://www.workingnomads.com',
-            'WorkInStartups': 'https://www.workinstartups.com',
-            'Jobtensor': 'https://www.jobtensor.com',
-            'Jora': 'https://au.jora.com',
-            'SEOJobs.com': 'https://www.seojobs.com',
-            'CareerBuilder': 'https://www.careerbuilder.com',
-            'Dice': 'https://www.dice.com',
-            'Escape The City': 'https://www.escapethecity.org',
-            'Jooble': 'https://jooble.org',
-            'Otta': 'https://otta.com',
-            'Remote.co': 'https://remote.co',
-            'SEL Jobs': 'https://www.seljobs.com',
-            'FlexJobs': 'https://www.flexjobs.com',
-            'Dynamite Jobs': 'https://dynamitejobs.com',
-            'SimplyHired': 'https://www.simplyhired.com',
-            'Remotive': 'https://remotive.com',
-        }
+        self.stdout.write(self.style.SUCCESS('Initializing job portals...'))
         
-        created_count = 0
-        updated_count = 0
-        
-        for portal_name, portal_url in job_portals.items():
-            portal, created = JobPortal.objects.get_or_create(
-                name=portal_name,
-                defaults={'url': portal_url, 'is_active': True}
-            )
+        # List of all 36 required job portals
+        portals = [
+            # UK & USA Major Job Portals
+            {'name': 'Indeed UK', 'url': 'https://www.indeed.co.uk/', 'is_active': True},
+            {'name': 'LinkedIn Jobs', 'url': 'https://www.linkedin.com/jobs/', 'is_active': True},
+            {'name': 'CV-Library', 'url': 'https://www.cv-library.co.uk/', 'is_active': True},
+            {'name': 'Adzuna', 'url': 'https://www.adzuna.co.uk/', 'is_active': True},
+            {'name': 'Totaljobs', 'url': 'https://www.totaljobs.com/', 'is_active': True},
+            {'name': 'Reed', 'url': 'https://www.reed.co.uk/', 'is_active': True},
+            {'name': 'Talent', 'url': 'https://www.talent.com/', 'is_active': True},
+            {'name': 'Glassdoor', 'url': 'https://www.glassdoor.com/', 'is_active': True},
+            {'name': 'ZipRecruiter', 'url': 'https://www.ziprecruiter.com/', 'is_active': True},
+            {'name': 'CWjobs', 'url': 'https://www.cwjobs.co.uk/', 'is_active': True},
+            {'name': 'Jobsora', 'url': 'https://uk.jobsora.com/', 'is_active': True},
+            {'name': 'WelcometotheJungle', 'url': 'https://www.welcometothejungle.com/en/jobs', 'is_active': True},
+            {'name': 'IT Job Board', 'url': 'https://www.technojobs.co.uk/', 'is_active': True},
+            {'name': 'Trueup', 'url': 'https://www.trueup.io/', 'is_active': True},
+            {'name': 'Redefined', 'url': 'https://redefined.jobs/', 'is_active': True},
             
-            if created:
-                created_count += 1
-                self.stdout.write(
-                    self.style.SUCCESS(f'Created: {portal_name}')
-                )
-            else:
-                # Update URL if it changed
-                if portal.url != portal_url:
-                    portal.url = portal_url
-                    portal.is_active = True
-                    portal.save()
-                    updated_count += 1
-                    self.stdout.write(
-                        self.style.WARNING(f'Updated: {portal_name}')
-                    )
+            # Remote Work Portals
+            {'name': 'We Work Remotely', 'url': 'https://weworkremotely.com/', 'is_active': True},
+            {'name': 'AngelList', 'url': 'https://angel.co/jobs', 'is_active': True},
+            {'name': 'Jobspresso', 'url': 'https://jobspresso.co/', 'is_active': True},
+            {'name': 'Grabjobs', 'url': 'https://grabjobs.co/', 'is_active': True},
+            {'name': 'Remote OK', 'url': 'https://remoteok.com/', 'is_active': True},
+            {'name': 'Working Nomads', 'url': 'https://www.workingnomads.co/jobs', 'is_active': True},
+            {'name': 'WorkInStartups', 'url': 'https://workinstartups.com/', 'is_active': True},
+            {'name': 'Jobtensor', 'url': 'https://jobtensor.com/', 'is_active': True},
+            {'name': 'Jora', 'url': 'https://www.jora.com/', 'is_active': True},
+            {'name': 'SEOJobs.com', 'url': 'https://www.seojobs.com/', 'is_active': True},
+            
+            # Additional US-focused Portals
+            {'name': 'CareerBuilder', 'url': 'https://www.careerbuilder.com/', 'is_active': True},
+            {'name': 'Dice', 'url': 'https://www.dice.com/', 'is_active': True},
+            {'name': 'Escape The City', 'url': 'https://www.escapethecity.org/', 'is_active': True},
+            {'name': 'Jooble', 'url': 'https://jooble.org/', 'is_active': True},
+            {'name': 'Otta', 'url': 'https://otta.com/', 'is_active': True},
+            {'name': 'Remote.co', 'url': 'https://remote.co/remote-jobs/', 'is_active': True},
+            {'name': 'SEL Jobs', 'url': 'https://jobs.searchenginejournal.com/', 'is_active': True},
+            {'name': 'FlexJobs', 'url': 'https://www.flexjobs.com/', 'is_active': True},
+            {'name': 'Dynamite Jobs', 'url': 'https://dynamitejobs.com/', 'is_active': True},
+            {'name': 'SimplyHired', 'url': 'https://www.simplyhired.com/', 'is_active': True},
+            {'name': 'Remotive', 'url': 'https://remotive.io/', 'is_active': True},
+        ]
         
-        self.stdout.write(
-            self.style.SUCCESS(
-                f'\nJob portals initialization completed!\n'
-                f'Created: {created_count}\n'
-                f'Updated: {updated_count}\n'
-                f'Total: {len(job_portals)}'
-            )
-        )
+        count_created = 0
+        count_updated = 0
+        
+        # Batch create or update job portals
+        with transaction.atomic():
+            for portal_data in portals:
+                portal, created = JobPortal.objects.update_or_create(
+                    name=portal_data['name'],
+                    defaults={
+                        'url': portal_data['url'],
+                        'is_active': portal_data['is_active']
+                    }
+                )
+                
+                if created:
+                    count_created += 1
+                else:
+                    count_updated += 1
+        
+        self.stdout.write(self.style.SUCCESS(
+            f'Successfully initialized job portals:'
+            f'\n- Created: {count_created}'
+            f'\n- Updated: {count_updated}'
+            f'\n- Total: {count_created + count_updated}'
+        ))
